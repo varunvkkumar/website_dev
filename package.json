@@ -1,0 +1,12 @@
+{
+  "name": "website_dev",
+  "version": "1.0.0",
+  "description": "develop a website in node js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
