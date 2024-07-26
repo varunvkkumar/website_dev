@@ -1,19 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Home from './components/Home';
-import Products from './components/Products';
-import Team from './components/Team';
-import Support from './components/Support';
-import Sales from './components/Sales';
-import Investors from './components/Investors';
+import Men from './components/Men';
+import Women from './components/Women';
+import Cart from './components/Cart';
+import Checkout from './components/Checkout';
 import './App.css';
+import trackEvent from './services/tracking'; // Import the tracking service
 
 function App() {
+  useEffect(() => {
+    const handleClick = (event) => {
+      trackEvent(event);
+    };
+
+    document.addEventListener('click', handleClick);
+
+    return () => {
+      document.removeEventListener('click', handleClick);
+    };
+  }, []);
+
   return (
     <Router>
       <div className="App">
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-          <Link className="navbar-brand" to="/">NuevoTech Soft</Link>
+          <Link className="navbar-brand" to="/">Innovative E-Commerce Solutions</Link>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -23,19 +35,16 @@ function App() {
                 <Link className="nav-link" to="/">Home</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/products">Products</Link>
+                <Link className="nav-link" to="/men">Men</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/team">Team</Link>
+                <Link className="nav-link" to="/women">Women</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/support">Support</Link>
+                <Link className="nav-link" to="/cart">Cart</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/sales">Sales</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/investors">Investors</Link>
+                <Link className="nav-link" to="/checkout">Checkout</Link>
               </li>
             </ul>
           </div>
@@ -43,11 +52,10 @@ function App() {
         <div className="container mt-4">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/team" element={<Team />} />
-            <Route path="/support" element={<Support />} />
-            <Route path="/sales" element={<Sales />} />
-            <Route path="/investors" element={<Investors />} />
+            <Route path="/men" element={<Men />} />
+            <Route path="/women" element={<Women />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/checkout" element={<Checkout />} />
           </Routes>
         </div>
       </div>
@@ -56,6 +64,10 @@ function App() {
 }
 
 export default App;
+
+
+
+
 
 
 
