@@ -1,17 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Home from './components/Home';
 import Men from './components/Men';
 import Women from './components/Women';
 import Cart from './components/Cart';
 import Checkout from './components/Checkout';
+import CouponModal from './components/CouponModal'; // Import the CouponModal component
 import './App.css';
 import trackEvent from './services/tracking'; // Import the tracking service
 
 function App() {
+  const [clickCount, setClickCount] = useState(0);
+  const [showCoupon, setShowCoupon] = useState(false);
+  const userEmail = 'user@example.com'; // Replace with actual user email logic
+
   useEffect(() => {
-    const handleClick = (event) => {
-      trackEvent(event);
+    const handleClick = async (event) => {
+      const response = await trackEvent(event, userEmail);
+      setClickCount(response.clickCount);
+
+      if (response.clickCount > 0 && response.clickCount % 5 === 0) {
+        setShowCoupon(true);
+      }
     };
 
     document.addEventListener('click', handleClick);
@@ -19,7 +29,11 @@ function App() {
     return () => {
       document.removeEventListener('click', handleClick);
     };
-  }, []);
+  }, [userEmail]);
+
+  const closeCoupon = () => {
+    setShowCoupon(false);
+  };
 
   return (
     <Router>
@@ -58,12 +72,16 @@ function App() {
             <Route path="/checkout" element={<Checkout />} />
           </Routes>
         </div>
+        <CouponModal show={showCoupon} onClose={closeCoupon} />
       </div>
     </Router>
   );
 }
 
 export default App;
+
+
+
 
 
 

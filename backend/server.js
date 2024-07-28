@@ -1,10 +1,12 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
+const { v4: uuidv4 } = require('uuid'); // Import UUID
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 const logFilePath = path.join(__dirname, 'data/clickstream.json');
+const userClicksPath = path.join(__dirname, 'data/userClicks.json');
 
 // Middleware to parse JSON bodies
 app.use(express.json());
@@ -12,14 +14,13 @@ app.use(express.json());
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, '../frontend/build')));
 
-// API route for testing
-app.get('/api', (req, res) => {
-  res.send('API Running');
-});
-
 // Route to handle clickstream tracking
 app.post('/track', (req, res) => {
   const clickData = req.body;
+  clickData.eventId = uuidv4(); // Generate a unique event ID
+  const userEmail = req.body.userEmail || 'default@user.com'; // Replace with actual user identification logic
+
+  // Log click data
   fs.readFile(logFilePath, 'utf8', (err, data) => {
     if (err) {
       console.error('Error reading log file:', err);
@@ -34,7 +35,25 @@ app.post('/track', (req, res) => {
         console.error('Error writing to log file:', err);
         return res.status(500).send('Error writing to log file');
       }
-      res.status(200).send('Data received');
+    });
+  });
+
+  // Track user clicks
+  fs.readFile(userClicksPath, 'utf8', (err, data) => {
+    if (err && err.code !== 'ENOENT') {
+      console.error('Error reading user clicks file:', err);
+      return res.status(500).send('Error reading user clicks file');
+    }
+
+    const userClicks = data ? JSON.parse(data) : {};
+    userClicks[userEmail] = (userClicks[userEmail] || 0) + 1;
+
+    fs.writeFile(userClicksPath, JSON.stringify(userClicks, null, 2), (err) => {
+      if (err) {
+        console.error('Error writing to user clicks file:', err);
+        return res.status(500).send('Error writing to user clicks file');
+      }
+      res.status(200).send({ clickCount: userClicks[userEmail], eventId: clickData.eventId });
     });
   });
 });
@@ -48,6 +67,9 @@ app.get('*', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+
+
 
 
 
