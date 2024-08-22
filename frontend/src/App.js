@@ -5,14 +5,17 @@ import Men from './components/Men';
 import Women from './components/Women';
 import Cart from './components/Cart';
 import Checkout from './components/Checkout';
-import CouponModal from './components/CouponModal'; // Import the CouponModal component
+import CouponModal from './components/CouponModal';
+import PacMan from './components/PacMan'; // Import the PacMan component
 import './App.css';
-import trackEvent from './services/tracking'; // Import the tracking service
+import trackEvent from './services/tracking';
+import Arkanoid from './components/Arkanoid'; // Import the Arkanoid component
+
 
 function App() {
   const [clickCount, setClickCount] = useState(0);
   const [showCoupon, setShowCoupon] = useState(false);
-  const userEmail = 'user@example.com'; // Replace with actual user email logic
+  const userEmail = 'user@example.com';
 
   useEffect(() => {
     const handleClick = async (event) => {
@@ -60,6 +63,12 @@ function App() {
               <li className="nav-item">
                 <Link className="nav-link" to="/checkout">Checkout</Link>
               </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/pacman">Pac-Man</Link> {/* Add link to Pac-Man */}
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/arkanoid">Arkanoid</Link> {/* Add link to Arkanoid */}
+              </li>
             </ul>
           </div>
         </nav>
@@ -70,6 +79,8 @@ function App() {
             <Route path="/women" element={<Women />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/pacman" element={<PacMan />} /> {/* Add route for Pac-Man */}
+            <Route path="/arkanoid" element={<Arkanoid />} /> {/* Add route for Arkanoid */}
           </Routes>
         </div>
         <CouponModal show={showCoupon} onClose={closeCoupon} />
@@ -79,6 +90,8 @@ function App() {
 }
 
 export default App;
+
+
 
 
 
