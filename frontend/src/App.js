@@ -6,11 +6,11 @@ import Women from './components/Women';
 import Cart from './components/Cart';
 import Checkout from './components/Checkout';
 import CouponModal from './components/CouponModal';
-import PacMan from './components/PacMan'; // Import the PacMan component
+import PacMan from './components/PacMan';
+import Arkanoid from './components/Arkanoid';
+import Game from './components/Game';
 import './App.css';
 import trackEvent from './services/tracking';
-import Arkanoid from './components/Arkanoid'; // Import the Arkanoid component
-
 
 function App() {
   const [clickCount, setClickCount] = useState(0);
@@ -64,10 +64,13 @@ function App() {
                 <Link className="nav-link" to="/checkout">Checkout</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/pacman">Pac-Man</Link> {/* Add link to Pac-Man */}
+                <Link className="nav-link" to="/pacman">Pac-Man</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/arkanoid">Arkanoid</Link> {/* Add link to Arkanoid */}
+                <Link className="nav-link" to="/arkanoid">Arkanoid</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/game">Fighting Game</Link> {/* Correct link to the fighting game */}
               </li>
             </ul>
           </div>
@@ -79,8 +82,9 @@ function App() {
             <Route path="/women" element={<Women />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
-            <Route path="/pacman" element={<PacMan />} /> {/* Add route for Pac-Man */}
-            <Route path="/arkanoid" element={<Arkanoid />} /> {/* Add route for Arkanoid */}
+            <Route path="/pacman" element={<PacMan />} />
+            <Route path="/arkanoid" element={<Arkanoid />} />
+            <Route path="/game" element={<Game />} /> {/* Correct route for the fighting game */}
           </Routes>
         </div>
         <CouponModal show={showCoupon} onClose={closeCoupon} />
@@ -90,6 +94,7 @@ function App() {
 }
 
 export default App;
+
 
 
 
