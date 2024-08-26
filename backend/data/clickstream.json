@@ -488,5 +488,185 @@
     "time": "2024-07-28T01:45:49.666Z",
     "userEmail": "user@example.com",
     "eventId": "5b3914df-a997-428a-929b-c673f733f45f"
+  },
+  {
+    "event": "click",
+    "element": "DIV",
+    "id": "",
+    "classList": "container mt-5",
+    "time": "2024-08-26T13:56:30.508Z",
+    "userEmail": "user@example.com",
+    "eventId": "58a0e74d-67c2-4760-8f42-049b7f9d3c71"
+  },
+  {
+    "event": "click",
+    "element": "A",
+    "id": "",
+    "classList": "btn btn-primary",
+    "time": "2024-08-26T13:56:32.299Z",
+    "userEmail": "user@example.com",
+    "eventId": "ff1a006c-1e8d-4f7c-afb6-834d89ccd02a"
+  },
+  {
+    "event": "click",
+    "element": "A",
+    "id": "",
+    "classList": "nav-link",
+    "time": "2024-08-26T13:56:34.956Z",
+    "userEmail": "user@example.com",
+    "eventId": "e3704559-7abe-4934-8cbe-441c91075df2"
+  },
+  {
+    "event": "click",
+    "element": "A",
+    "id": "",
+    "classList": "navbar-brand",
+    "time": "2024-08-26T14:01:57.277Z",
+    "userEmail": "user@example.com",
+    "eventId": "c2dee411-ace2-4726-8c9b-ab5dc3b0619a"
+  },
+  {
+    "event": "click",
+    "element": "SPAN",
+    "id": "",
+    "classList": "close",
+    "time": "2024-08-26T14:01:59.449Z",
+    "userEmail": "user@example.com",
+    "eventId": "ff4ce11a-6b7b-4e3c-bb3a-6f6056a5c47d"
+  },
+  {
+    "event": "click",
+    "element": "A",
+    "id": "",
+    "classList": "btn btn-primary",
+    "time": "2024-08-26T14:02:05.362Z",
+    "userEmail": "user@example.com",
+    "eventId": "0034da69-7f1d-490b-9359-0f924546543b"
+  },
+  {
+    "event": "click",
+    "element": "A",
+    "id": "",
+    "classList": "nav-link",
+    "time": "2024-08-26T14:02:06.951Z",
+    "userEmail": "user@example.com",
+    "eventId": "981b158f-b8b8-4aaa-a9f0-7a4d2bd30991"
+  },
+  {
+    "event": "click",
+    "element": "DIV",
+    "id": "",
+    "classList": "card-body",
+    "time": "2024-08-26T14:02:17.407Z",
+    "userEmail": "user@example.com",
+    "eventId": "6af6f792-3437-423c-baf2-3cf790b47961"
+  },
+  {
+    "event": "click",
+    "element": "A",
+    "id": "",
+    "classList": "btn btn-primary",
+    "time": "2024-08-26T14:02:18.055Z",
+    "userEmail": "user@example.com",
+    "eventId": "6d25772d-a08d-48d2-9f83-8d08195bb4bc"
+  },
+  {
+    "event": "click",
+    "element": "SPAN",
+    "id": "",
+    "classList": "close",
+    "time": "2024-08-26T14:02:19.779Z",
+    "userEmail": "user@example.com",
+    "eventId": "0a2df62f-3d61-4800-9501-09b8e3a8a1cf"
+  },
+  {
+    "event": "click",
+    "element": "A",
+    "id": "",
+    "classList": "nav-link",
+    "time": "2024-08-26T14:03:32.382Z",
+    "userEmail": "user@example.com",
+    "eventId": "fb593428-d568-485e-887b-1ea74c23b8a2"
+  },
+  {
+    "event": "click",
+    "element": "A",
+    "id": "",
+    "classList": "nav-link",
+    "time": "2024-08-26T14:03:33.854Z",
+    "userEmail": "user@example.com",
+    "eventId": "10c8d878-96ee-4c8a-bc3b-d3be2e91cb3f"
+  },
+  {
+    "event": "click",
+    "element": "A",
+    "id": "",
+    "classList": "nav-link",
+    "time": "2024-08-26T14:08:47.005Z",
+    "userEmail": "user@example.com",
+    "eventId": "3b237a0b-1af4-4abc-b498-4e84a0f84d3a"
+  },
+  {
+    "event": "click",
+    "element": "A",
+    "id": "",
+    "classList": "nav-link",
+    "time": "2024-08-26T14:08:51.346Z",
+    "userEmail": "user@example.com",
+    "eventId": "345e5b73-b272-486d-8e37-a9874bdf99a2"
+  },
+  {
+    "event": "click",
+    "element": "DIV",
+    "id": "",
+    "classList": "modal",
+    "time": "2024-08-26T14:08:52.835Z",
+    "userEmail": "user@example.com",
+    "eventId": "916ba78d-2316-4f81-98ba-7c46efce7e74"
+  },
+  {
+    "event": "click",
+    "element": "A",
+    "id": "",
+    "classList": "nav-link",
+    "time": "2024-08-26T14:08:58.290Z",
+    "userEmail": "user@example.com",
+    "eventId": "3f91f3a6-9b24-497c-8c1b-e02d64a4561c"
+  },
+  {
+    "event": "click",
+    "element": "A",
+    "id": "",
+    "classList": "nav-link",
+    "time": "2024-08-26T14:09:03.119Z",
+    "userEmail": "user@example.com",
+    "eventId": "7b0d1d43-8dbf-4726-ac79-8b9515107b22"
+  },
+  {
+    "event": "click",
+    "element": "A",
+    "id": "",
+    "classList": "nav-link",
+    "time": "2024-08-26T14:09:04.366Z",
+    "userEmail": "user@example.com",
+    "eventId": "13fcb628-9bf6-42b8-bcec-4e302f7511ca"
+  },
+  {
+    "event": "click",
+    "element": "A",
+    "id": "",
+    "classList": "nav-link",
+    "time": "2024-08-26T14:09:05.228Z",
+    "userEmail": "user@example.com",
+    "eventId": "527f80a2-f28e-4bfd-a945-6914b4871117"
+  },
+  {
+    "event": "click",
+    "element": "A",
+    "id": "",
+    "classList": "nav-link",
+    "time": "2024-08-26T14:12:12.281Z",
+    "userEmail": "user@example.com",
+    "eventId": "e5458f92-bb9c-4d60-b4d3-8149b98ad2bd"
   }
 ]
