@@ -6,154 +6,126 @@ import Men from './components/Men';
 import Women from './components/Women';
 import Cart from './components/Cart';
 import Checkout from './components/Checkout';
-import CouponModal from './components/CouponModal';
+import CouponModal from './components/CouponModal'; // Import the CouponModal component
 import PacMan from './components/PacMan';
 import Arkanoid from './components/Arkanoid';
 import Game from './components/Game';
 import './App.css';
-import trackEvent from './services/tracking'; // Import trackEvent
 
 function App() {
-  const [clickCount, setClickCount] = useState(0);
-  const [showCoupon, setShowCoupon] = useState(false);
-  const userEmail = 'user@example.com'; // Define userEmail inside the component
+    const [showCoupon, setShowCoupon] = useState(false);
+    const [couponMessage, setCouponMessage] = useState('');
+    const userEmail = 'user@example.com'; // Assuming a static user email for testing purposes
 
-  // Modified handleClick function to use trackingId
-  const handleClick = async (event) => {
-    const trackingId = event.target.getAttribute('data-tracking-id');
-
-    // Only track events with a specific data-tracking-id
-    if (!trackingId) return;
-
-    try {
-      const response = await trackEvent({ trackingId }, userEmail);
-      console.log('Response from server:', response); // Debug log
-      if (response.showCoupon) { // Use the server's decision
-        console.log('Setting showCoupon to true');  // Additional debug log
-        setShowCoupon(true);
-      }
-    } catch (error) {
-      console.error('Error in handleClick:', error);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener('click', handleClick);
-    return () => {
-      document.removeEventListener('click', handleClick);
+    // Function to load the container.js script dynamically
+    const loadContainerScript = () => {
+        const script = document.createElement('script');
+        script.src = '/container.js'; // Path to container.js served by the backend
+        script.async = true;
+        script.onload = () => console.log('container.js loaded successfully');
+        script.onerror = () => console.error('Failed to load container.js');
+        document.head.appendChild(script);
     };
-  }, [userEmail]);
 
-  const closeCoupon = () => {
-    setShowCoupon(false);
-  };
+    // Function to push events to the dataLayer
+    const pushToDataLayer = (event) => {
+        const eventDetail = { event, timestamp: new Date().toISOString(), userEmail };
+        if (!window.dataLayer) {
+            window.dataLayer = [];
+        }
+        window.dataLayer.push(eventDetail);
+        console.log('Pushed to dataLayer:', eventDetail); // Debug log
+        const customEvent = new CustomEvent('dataLayerPush', { detail: eventDetail });
+        window.dispatchEvent(customEvent);
+    };
 
-  return (
-    <Router>
-      <div className="App">
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-          <Link className="navbar-brand" to="/" data-tracking-id="home-link">
-            Innovative E-Commerce Solutions
-          </Link>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-            data-tracking-id="navbar-toggle"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav">
-              <li className="nav-item">
-                <Link className="nav-link" to="/" data-tracking-id="home-link">
-                  Home
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/men" data-tracking-id="men-link">
-                  Men
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/women" data-tracking-id="women-link">
-                  Women
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/cart" data-tracking-id="cart-link">
-                  Cart
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/checkout" data-tracking-id="checkout-link">
-                  Checkout
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/pacman" data-tracking-id="pacman-link">
-                  Pac-Man
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/arkanoid" data-tracking-id="arkanoid-link">
-                  Arkanoid
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/game" data-tracking-id="game-link">
-                  Fighting Game
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </nav>
-        <div className="container mt-4">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/men" element={<Men />} />
-            <Route path="/women" element={<Women />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/pacman" element={<PacMan />} />
-            <Route path="/arkanoid" element={<Arkanoid />} />
-            <Route path="/game" element={<Game />} />
-          </Routes>
-        </div>
-        <CouponModal show={showCoupon} onClose={closeCoupon} />
-      </div>
-    </Router>
-  );
+    // Show the coupon modal with a custom message
+    const handleShowCoupon = (message) => {
+        setCouponMessage(message);
+        setShowCoupon(true);
+    };
+
+    useEffect(() => {
+        // Load container.js on component mount
+        loadContainerScript();
+
+        // Provide the callback to show the coupon modal
+        window.showCouponModal = handleShowCoupon;
+
+        // Example: Push a page view event when the component mounts
+        pushToDataLayer('page_view');
+
+        // Cleanup function to remove the global function
+        return () => {
+            window.showCouponModal = null;
+        };
+    }, []);
+
+    return (
+        <Router>
+            <div className="App">
+                <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+                    <Link className="navbar-brand" to="/" onClick={() => pushToDataLayer('home_link_click')}>
+                        Innovative E-Commerce Solutions
+                    </Link>
+                    <div className="collapse navbar-collapse" id="navbarNav">
+                        <ul className="navbar-nav">
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/men" onClick={() => pushToDataLayer('men_link_click')}>
+                                    Men
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/women" onClick={() => pushToDataLayer('women_link_click')}>
+                                    Women
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/cart" onClick={() => pushToDataLayer('cart_link_click')}>
+                                    Cart
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/checkout" onClick={() => pushToDataLayer('checkout_link_click')}>
+                                    Checkout
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/pacman" onClick={() => pushToDataLayer('pacman_link_click')}>
+                                    Pac-Man
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/arkanoid" onClick={() => pushToDataLayer('arkanoid_link_click')}>
+                                    Arkanoid
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/game" onClick={() => pushToDataLayer('game_link_click')}>
+                                    Fighting Game
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <div className="container mt-4">
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/men" element={<Men />} />
+                        <Route path="/women" element={<Women />} />
+                        <Route path="/cart" element={<Cart />} />
+                        <Route path="/checkout" element={<Checkout />} />
+                        <Route path="/pacman" element={<PacMan />} />
+                        <Route path="/arkanoid" element={<Arkanoid />} />
+                        <Route path="/game" element={<Game />} />
+                    </Routes>
+                </div>
+                <CouponModal show={showCoupon} onClose={() => setShowCoupon(false)} message={couponMessage} />
+            </div>
+        </Router>
+    );
 }
 
 export default App;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
