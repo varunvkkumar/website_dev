@@ -1,24 +1,27 @@
+// server.js
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
-const { v4: uuidv4 } = require('uuid'); // Import UUID
+const axios = require('axios');
+const { v4: uuidv4 } = require('uuid');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 const logFilePath = path.join(__dirname, 'data/clickstream.json');
 const userClicksPath = path.join(__dirname, 'data/userClicks.json');
 
-// Middleware to parse JSON bodies
 app.use(express.json());
-
-// Serve static files from the React app
 app.use(express.static(path.join(__dirname, '../frontend/build')));
 
 // Route to handle clickstream tracking
-app.post('/track', (req, res) => {
-  const clickData = req.body;
-  clickData.eventId = uuidv4(); // Generate a unique event ID
-  const userEmail = req.body.userEmail || 'default@user.com'; // Replace with actual user identification logic
+app.post('/track', async (req, res) => {
+  const { trackingId, userEmail } = req.body;
+  const clickData = {
+    eventId: uuidv4(),
+    trackingId,
+    timestamp: new Date().toISOString(),
+    userEmail: userEmail || 'default@user.com'
+  };
 
   // Log click data
   fs.readFile(logFilePath, 'utf8', (err, data) => {
@@ -48,18 +51,34 @@ app.post('/track', (req, res) => {
     const userClicks = data ? JSON.parse(data) : {};
     userClicks[userEmail] = (userClicks[userEmail] || 0) + 1;
 
-    fs.writeFile(userClicksPath, JSON.stringify(userClicks, null, 2), (err) => {
-      if (err) {
-        console.error('Error writing to user clicks file:', err);
-        return res.status(500).send('Error writing to user clicks file');
-      }
-      res.status(200).send({ clickCount: userClicks[userEmail], eventId: clickData.eventId });
+    // Call the Flask ML server for the coupon decision
+    axios.post('http://localhost:5001/coupon-decision', {
+      clickCount: userClicks[userEmail],
+      userEmail: userEmail,
+      trackingId: trackingId // Include trackingId in the request to Flask
+    })
+    .then(flaskRes => {
+      const couponDecision = flaskRes.data.shouldShowCoupon;
+      console.log('Coupon Decision from Flask:', couponDecision);  // Debug log
+      console.log('Tracking ID sent to Flask:', trackingId);  // Additional debug log
+
+      res.status(200).send({ clickCount: userClicks[userEmail], eventId: clickData.eventId, showCoupon: couponDecision });
+
+      // Save updated user clicks data
+      fs.writeFile(userClicksPath, JSON.stringify(userClicks, null, 2), (err) => {
+        if (err) {
+          console.error('Error writing to user clicks file:', err);
+        }
+      });
+    })
+    .catch(error => {
+      console.error('Error contacting ML server:', error);
+      res.status(500).send('Error making coupon decision');
     });
   });
 });
 
-// The "catchall" handler: for any request that doesn't match the above,
-// send back index.html from the React app's build directory.
+// The "catchall" handler
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
 });
@@ -67,6 +86,15 @@ app.get('*', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+
+
+
+
+
+
+
+
 
 
 
