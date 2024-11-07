@@ -1,0 +1,621 @@
+,,,,,,,,,,,,,,,,,
+,Case 1 - Rishabh Gupta,,,,,,,,,,,,,,,,
+,Problem statement,,,Active gym goer wants to reduce fat and maintain muscle,,,,,,,,,Recommended Solution,,,,
+,,,,,,,,,,,,,,,,,
+,Data collected,,,,,,,,Data calculated,,,,,,,,
+,Physical,Height,CBW,Sex,Appearance,LBM Source,Dexa LBM,,IBW,LBM,,,Total Macros ,,,Formula Used,
+,,177 cm,92 kg,Male,Loose,NA,NA,,77.8 kg,64 kg,,,Protein,174 g,,Protein,"if(style choice = Keto) then override Protein(Lower Limit & Upper limit)
+KetoProtein lower limit = (.15*goal calories)/4 
+KetoProtein upper limit = (.25*goal calories)/4
+
+else if(style choice = Fatty Protein) then override Protein(Lower Limit & Upper limit)
+&Protein = LBM*ActivityLvl
+
+else select Protein in range (Lower limit<=Protein<=Upper limit)"
+,,,,,,,,,Formula used,,,,Fat ,190 g,,Fat ,"if(style choice = Keto) then override Fat(Lower Limit & Upper limit)
+KetoFat lower limit = (Goal calories - (Protein lower limit*4) - 50)/4
+KetoFat lower limit = (Goal calories - (Protein Upper limit*4) - 50)/4
+
+if(style choice = Fatty Protein) then override Fat(Lower Limit & Upper limit)
+HPHF Fat lower limit = (LBM*Activity level) & HPHF Fat Upper limit = (LBM*Activity level)+50
+
+if(style choice = Low Carb)
+then LowCarb Fat range = 
+((Goal calories-((Protein lower limit)/4)-100)/9)<=Low Carb Fat range<= ((Goal calories-((Protein higher limit)/4)-100)/9)
+
+
+if(style choice = Moderation)
+then Moderation Fat range = 
+((Goal calories-((Protein lower limit)/4)-100)/9)<=Moderation Fat range<= ((Goal calories-((Protein higher limit)/4)-100)/9)"
+,Goal,Lose Fat,Gain LBM,,,,,,IBW,LBM,,,Carbs,100 g,,Carbs,"if(style choice = Fatty Protein) then Carb<= 30 g
+if(style choice = Keto) then Carb<= 50 g
+if(style choice = Low carb) then Carb<= 100 g
+if(style choice = Moderation) then Carb<= Upper Limit Carb
+
+else if(style choice = Fatty Protein) then override Protein(Lower Limit & Upper limit)
+&Protein = LBM*ActivityLvl
+
+else select Protein in range (Lower limit<=Protein<=Upper limit)"
+,,,,,,,,,"If (Sex=Male) IBW = Height-100
+If (Sex=Female) IBW = (Height-100)-(.1*Height)","if(LBM source = Dexa, then LBM=Dexa LBM)
+else (if Sex = Male
+(if (IBW<=CBW then LBM=CBW)
+elseif(LowIBW<=CBW<=HiIBW & if(appearance=Lean,LBM=CBW else LBM=.85*CBW)
+elseif(CBW>HiIBW & if(appearance=lean then LBM=CBW 
+elseif(CBW<=110,(LBM=.70*CBW),elseif(111<=CBW<=120,LBM=.65*CBW),elseif(121<=CBW<=130,LBM=.60*CBW),elseif(131<=CBW<=140,LBM=.55*CBW)
+or
+if Sex = Female
+(if (IBW<=CBW then LBM=CBW)
+elseif(LowIBW<=CBW<=HiIBW & if(appearance=Lean,LBM=CBW else LBM=.80*CBW)
+elseif(CBW<=90,(LBM=.70*CBW),elseif(91<=CBW<=100,LBM=.65*CBW),elseif(101<=CBW<=110,LBM=.60*CBW),elseif(111<=CBW<=120,LBM=.55*CBW)",,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,Collaborative user input,,,,,,,,RMR,TDEE,Goal calories,,Meal by meal breakdown,,,,
+,,,,Style choice,Activity lvl,Food pref,,,1916 kcal,3306 kcal,2806 kcal,,Meal - 1,Protein,95 g,,
+,,,,Low Carb,Advanced,Lacto Ovo,,,Formula Used,,,,,Fat,80 g,,
+,,,,,,,,,"if(Style choice = Fatty protein)
+then RMR = NA
+else RMR = 500+(22*LBM)","if(Style choice = Fatty protein)
+then TDEE = NA
+else 
+TDEE = RMR*Activity lvl","if (style choice = Fatty protein )
+then (Goal calories = NA)
+else((
+if(goal=Lose Fat, then (TDEE-500)
+else if(goal=Gain LBM, then (TDEE+500)
+else if(goal=maint performance, then(TDEE)))",,,Carb,5 g,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,Meal - 2,Protein ,11 g,,
+,Interactive recommendations,,,,,,,,Formula Used,,,,,Fat ,21 g,,
+,,,,Protein range,Fat range,Carb Range,,,Protein,Fat,Carb,,,Carb,50 g,,
+,,,,Upper Limit,Upper limit,<100g,,,"Lower limit formula
+if(goal=lose fat)
+then(if(LBM Source = Dexa)
+then(Lower limit = 2.3*LBM, else(Lower limit = LBM*1.8)
+Or If(goal = Gain LBM)
+then(Lower limit = 1.5*LBM)
+or if(goal = maint perform)
+then(Lower limit = 1.4*LBM)
+
+",Lower limit = 0.2*TDEE,"if Style choice = (Fatty Protein)
+then Daily Carb <=30 g 
+if Style choice = (Low Carb)
+then Daily Carb <=100 g 
+if Style choice = (Keto)
+then Daily Carb <=50 g",,,,,,
+,,,,,,,,,"Upper Limit formula
+if(goal=lose fat)
+then(if(LBM Source = Dexa)
+then(Lower limit = 3.1*LBM, else(Lower limit = LBM*2.7)
+Or If(goal = Gain LBM)
+then(Lower limit = 2*LBM)
+or if(goal = maint perform)
+then(Lower limit = 1.7*LBM)
+",Upper limit = 0.35*TDEE,"if Style choice = (Moderation)
+then Daily Carb = (Goal calories-(Protein*4)+(Fat*4))/4",,Meal - 3,Protein ,56 g,,
+,,,,,,,,,,,,,,Fat,75 g,,
+,,,,,,,,,,,,,,Carb,30 g,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,Case 2 - Rahul Nair,,,,,,,,,,,,,,,,
+,Problem statement,,,Active gym goer wants to reduce fat and maintain muscle,,,,,,,,,Recommended Solution,,,,
+,,,,,,,,,,,,,,,,,
+,Data collected,,,,,,,,Data calculated,,,,,,,,
+,Physical,Height,CBW,Sex,Appearance,LBM Source,Dexa LBM,,IBW,LBM,,,Total Macros ,,,Formula Used,
+,,170 cm,88 kg ,Male,Loose,Dexa,59 kg,,70 kg,59 kg,,,Protein,136 g,,Protein,"if(style choice = Keto) then override Protein(Lower Limit & Upper limit)
+KetoProtein lower limit = (.15*goal calories)/4 
+KetoProtein upper limit = (.25*goal calories)/4
+
+else if(style choice = Fatty Protein) then override Protein(Lower Limit & Upper limit)
+&Protein = LBM*ActivityLvl
+
+else select Protein in range (Lower limit<=Protein<=Upper limit)"
+,,,,,,,,,Formula used,,,,Fat ,149 g,,Fat ,"if(style choice = Keto) then override Fat(Lower Limit & Upper limit)
+KetoFat lower limit = (Goal calories - (Protein lower limit*4) - 50)/4
+KetoFat lower limit = (Goal calories - (Protein Upper limit*4) - 50)/4
+
+if(style choice = Fatty Protein) then override Fat(Lower Limit & Upper limit)
+HPHF Fat lower limit = (LBM*Activity level) & HPHF Fat Upper limit = (LBM*Activity level)+50
+
+if(style choice = Low Carb)
+then LowCarb Fat range = 
+((Goal calories-((Protein lower limit)/4)-100)/9)<=Low Carb Fat range<= ((Goal calories-((Protein higher limit)/4)-100)/9)
+
+
+if(style choice = Moderation)
+then Moderation Fat range = 
+((Goal calories-((Protein lower limit)/4)-100)/9)<=Moderation Fat range<= ((Goal calories-((Protein higher limit)/4)-100)/9)"
+,Goal,Lose Fat,Gain LBM,,,,,,IBW,LBM,,,Carbs,100 g,,Carbs,"if(style choice = Fatty Protein) then Carb<= 30 g
+if(style choice = Keto) then Carb<= 50 g
+if(style choice = Low carb) then Carb<= 100 g
+if(style choice = Moderation) then Carb<= Upper Limit Carb
+
+else if(style choice = Fatty Protein) then override Protein(Lower Limit & Upper limit)
+&Protein = LBM*ActivityLvl
+
+else select Protein in range (Lower limit<=Protein<=Upper limit)"
+,,,,,,,,,"If (Sex=Male) IBW = Height-100
+If (Sex=Female) IBW = (Height-100)-(.1*Height)","if(LBM source = Dexa, then LBM=Dexa LBM)
+else (if Sex = Male
+(if (IBW<=CBW then LBM=CBW)
+elseif(LowIBW<=CBW<=HiIBW & if(appearance=Lean,LBM=CBW else LBM=.85*CBW)
+elseif(CBW>HiIBW & if(appearance=lean then LBM=CBW 
+elseif(CBW<=110,(LBM=.70*CBW),elseif(111<=CBW<=120,LBM=.65*CBW),elseif(121<=CBW<=130,LBM=.60*CBW),elseif(131<=CBW<=140,LBM=.55*CBW)
+or
+if Sex = Female
+(if (IBW<=CBW then LBM=CBW)
+elseif(LowIBW<=CBW<=HiIBW & if(appearance=Lean,LBM=CBW else LBM=.80*CBW)
+elseif(CBW<=90,(LBM=.70*CBW),elseif(91<=CBW<=100,LBM=.65*CBW),elseif(101<=CBW<=110,LBM=.60*CBW),elseif(111<=CBW<=120,LBM=.55*CBW)",,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,Collaborative user input,,,,,,,,RMR,TDEE,Goal calories,,Meal by meal breakdown,,,,
+,,,,Style choice,Activity lvl,Food pref,,,1798 Kcal,2786 kcal,2286 kcal,,Meal - 1,Protein,83 g,,
+,,,,Low Carb,Intermed,Omni,,,Formula Used,,,,,Fat,37 g,,
+,,,,,,,,,"if(Style choice = Fatty protein)
+then RMR = NA
+else RMR = 500+(22*LBM)","if(Style choice = Fatty protein)
+then TDEE = NA
+else 
+TDEE = RMR*Activity lvl","if (style choice = Fatty protein )
+then (Goal calories = NA)
+else((
+if(goal=Lose Fat, then (TDEE-500)
+else if(goal=Gain LBM, then (TDEE+500)
+else if(goal=maint performance, then(TDEE)))",,,Carb,41 g,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,Meal - 2,Protein ,45 g,,
+,Interactive recommendations,,,,,,,,Formula Used,,,,,Fat ,45 g,,
+,,,,Protein range,Fat range,Carb Range,,,Protein,Fat,Carb,,,Carb,40 g,,
+,,,,Upper Limit,Upper limit,<100g,,,"Lower limit formula
+if(goal=lose fat)
+then(if(LBM Source = Dexa)
+then(Lower limit = 2.3*LBM, else(Lower limit = LBM*1.8)
+Or If(goal = Gain LBM)
+then(Lower limit = 1.5*LBM)
+or if(goal = maint perform)
+then(Lower limit = 1.4*LBM)
+
+",Lower limit = 0.2*TDEE,"if Style choice = (Fatty Protein)
+then Daily Carb <=30 g 
+if Style choice = (Low Carb)
+then Daily Carb <=100 g 
+if Style choice = (Keto)
+then Daily Carb <=50 g",,,,,,
+,,,,,,,,,"Upper Limit formula
+if(goal=lose fat)
+then(if(LBM Source = Dexa)
+then(Lower limit = 3.1*LBM, else(Lower limit = LBM*2.7)
+Or If(goal = Gain LBM)
+then(Lower limit = 2*LBM)
+or if(goal = maint perform)
+then(Lower limit = 1.7*LBM)
+",Upper limit = 0.35*TDEE,"if Style choice = (Moderation)
+then Daily Carb = (Goal calories-(Protein*4)+(Fat*4))/4",,Meal - 3,Protein ,13 g,,
+,,,,,,,,,,,,,,Fat,7 g,,
+,,,,,,,,,,,,,,Carb,43 g,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,Case 3 - Sidharth,,,,,,,,,,,,,,,,
+,Problem statement,,,Active gym goer wants to Gain muscle and improve blood glucose levels,,,,,,,,,Recommended Solution,,,,
+,,,,,,,,,,,,,,,,,
+,Data collected,,,,,,,,Data calculated,,,,,,,,
+,Physical,Height,CBW,Sex,Appearance,LBM Source,Dexa LBM,,IBW,LBM,,,Total Macros ,,,Formula Used,
+,,180 cm,67 kg,Male,Loose,NA,NA,,80 kg,57 kg,,,Protein,114 g,,Protein,"if(style choice = Keto) then override Protein(Lower Limit & Upper limit)
+KetoProtein lower limit = (.15*goal calories)/4 
+KetoProtein upper limit = (.25*goal calories)/4
+
+else if(style choice = Fatty Protein) then override Protein(Lower Limit & Upper limit)
+&Protein = LBM*ActivityLvl
+
+else select Protein in range (Lower limit<=Protein<=Upper limit)"
+,,,,,,,,,Formula used,,,,Fat ,207 g,,Fat ,"if(style choice = Keto) then override Fat(Lower Limit & Upper limit)
+KetoFat lower limit = (Goal calories - (Protein lower limit*4) - 50)/4
+KetoFat lower limit = (Goal calories - (Protein Upper limit*4) - 50)/4
+
+if(style choice = Fatty Protein) then override Fat(Lower Limit & Upper limit)
+HPHF Fat lower limit = (LBM*Activity level) & HPHF Fat Upper limit = (LBM*Activity level)+50
+
+if(style choice = Low Carb)
+then LowCarb Fat range = 
+((Goal calories-((Protein lower limit)/4)-100)/9)<=Low Carb Fat range<= ((Goal calories-((Protein higher limit)/4)-100)/9)
+
+
+if(style choice = Moderation)
+then Moderation Fat range = 
+((Goal calories-((Protein lower limit)/4)-100)/9)<=Moderation Fat range<= ((Goal calories-((Protein higher limit)/4)-100)/9)"
+,Goal,Gain LBM,Improve metabolic health,,,,,,IBW,LBM,,,Carbs,100 g,,Carbs,"if(style choice = Fatty Protein) then Carb<= 30 g
+if(style choice = Keto) then Carb<= 50 g
+if(style choice = Low carb) then Carb<= 100 g
+if(style choice = Moderation) then Carb<= Upper Limit Carb
+
+else if(style choice = Fatty Protein) then override Protein(Lower Limit & Upper limit)
+&Protein = LBM*ActivityLvl
+
+else select Protein in range (Lower limit<=Protein<=Upper limit)"
+,,,,,,,,,"If (Sex=Male) IBW = Height-100
+If (Sex=Female) IBW = (Height-100)-(.1*Height)","if(LBM source = Dexa, then LBM=Dexa LBM)
+else (if Sex = Male
+(if (IBW<=CBW then LBM=CBW)
+elseif(LowIBW<=CBW<=HiIBW & if(appearance=Lean,LBM=CBW else LBM=.85*CBW)
+elseif(CBW>HiIBW & if(appearance=lean then LBM=CBW 
+elseif(CBW<=110,(LBM=.70*CBW),elseif(111<=CBW<=120,LBM=.65*CBW),elseif(121<=CBW<=130,LBM=.60*CBW),elseif(131<=CBW<=140,LBM=.55*CBW)
+or
+if Sex = Female
+(if (IBW<=CBW then LBM=CBW)
+elseif(LowIBW<=CBW<=HiIBW & if(appearance=Lean,LBM=CBW else LBM=.80*CBW)
+elseif(CBW<=90,(LBM=.70*CBW),elseif(91<=CBW<=100,LBM=.65*CBW),elseif(101<=CBW<=110,LBM=.60*CBW),elseif(111<=CBW<=120,LBM=.55*CBW)",,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,Collaborative user input,,,,,,,,RMR,TDEE,Goal calories,,Meal by meal breakdown,,,,
+,,,,Style choice,Activity lvl,Food pref,,,1752 Kcal,2717 Kcal,2717 Kcal,,Meal - 1,Protein,44 g,,
+,,,,Low Carb,Intermed,Omni,,,Formula Used,,,,,Fat,54 g,,
+,,,,,,,,,"if(Style choice = Fatty protein)
+then RMR = NA
+else RMR = 500+(22*LBM)","if(Style choice = Fatty protein)
+then TDEE = NA
+else 
+TDEE = RMR*Activity lvl","if (style choice = Fatty protein )
+then (Goal calories = NA)
+else((
+if(goal=Lose Fat, then (TDEE-500)
+else if(goal=Gain LBM, then (TDEE+500)
+else if(goal=maint performance, then(TDEE)))",,,Carb,4 g,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,Meal - 2,Protein ,30 g,,
+,Interactive recommendations,,,,,,,,Formula Used,,,,,Fat ,60 g,,
+,,,,Protein range,Fat range,Carb Range,,,Protein,Fat,Carb,,,Carb,55 g,,
+,,,,Upper Limit,Upper limit,<100g,,,"Lower limit formula
+if(goal=lose fat)
+then(if(LBM Source = Dexa)
+then(Lower limit = 2.3*LBM, else(Lower limit = LBM*1.8)
+Or If(goal = Gain LBM)
+then(Lower limit = 1.5*LBM)
+or if(goal = maint perform)
+then(Lower limit = 1.4*LBM)
+
+",Lower limit = 0.2*TDEE,"if Style choice = (Fatty Protein)
+then Daily Carb <=30 g 
+if Style choice = (Low Carb)
+then Daily Carb <=100 g 
+if Style choice = (Keto)
+then Daily Carb <=50 g",,,,,,
+,,,,,,,,,"Upper Limit formula
+if(goal=lose fat)
+then(if(LBM Source = Dexa)
+then(Lower limit = 3.1*LBM, else(Lower limit = LBM*2.7)
+Or If(goal = Gain LBM)
+then(Lower limit = 2*LBM)
+or if(goal = maint perform)
+then(Lower limit = 1.7*LBM)
+",Upper limit = 0.35*TDEE,"if Style choice = (Moderation)
+then Daily Carb = (Goal calories-(Protein*4)+(Fat*4))/4",,Meal - 3,Protein ,40 g,,
+,,,,,,,,,,,,,,Fat,90 g,,
+,,,,,,,,,,,,,,Carb,35 g,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,Case 4 - Saanika,,,,,,,,,,,,,,,,
+,Problem statement,,,Tennis player wants to gain muscle and improve performance,,,,,,,,,Recommended Solution,,,,
+,,,,,,,,,,,,,,,,,
+,Data collected,,,,,,,,Data calculated,,,,,,,,
+,Physical,Height,CBW,Sex,Appearance,LBM Source,Dexa LBM,,IBW,LBM,,,Total Macros ,,,Formula Used,
+,,160 cm,43 kg,Female,Lean,NA,NA,,54 kg,43 kg,,,Protein,73 g,,Protein,"if(style choice = Keto) then override Protein(Lower Limit & Upper limit)
+KetoProtein lower limit = (.15*goal calories)/4 
+KetoProtein upper limit = (.25*goal calories)/4
+
+else if(style choice = Fatty Protein) then override Protein(Lower Limit & Upper limit)
+&Protein = LBM*ActivityLvl
+
+else select Protein in range (Lower limit<=Protein<=Upper limit)"
+,,,,,,,,,Formula used,,,,Fat ,87 g,,Fat ,"if(style choice = Keto) then override Fat(Lower Limit & Upper limit)
+KetoFat lower limit = (Goal calories - (Protein lower limit*4) - 50)/4
+KetoFat lower limit = (Goal calories - (Protein Upper limit*4) - 50)/4
+
+if(style choice = Fatty Protein) then override Fat(Lower Limit & Upper limit)
+HPHF Fat lower limit = (LBM*Activity level) & HPHF Fat Upper limit = (LBM*Activity level)+50
+
+if(style choice = Low Carb)
+then LowCarb Fat range = 
+((Goal calories-((Protein lower limit)/4)-100)/9)<=Low Carb Fat range<= ((Goal calories-((Protein higher limit)/4)-100)/9)
+
+
+if(style choice = Moderation)
+then Moderation Fat range = 
+((Goal calories-((Protein lower limit)/4)-100)/9)<=Moderation Fat range<= ((Goal calories-((Protein higher limit)/4)-100)/9)"
+,Goal,Gain LBM,Improve athletic performance,,,,,,IBW,LBM,,,Carbs,291 g,,Carbs,"if(style choice = Fatty Protein) then Carb<= 30 g
+if(style choice = Keto) then Carb<= 50 g
+if(style choice = Low carb) then Carb<= 100 g
+if(style choice = Moderation) then Carb<= Upper Limit Carb
+
+else if(style choice = Fatty Protein) then override Protein(Lower Limit & Upper limit)
+&Protein = LBM*ActivityLvl
+
+else select Protein in range (Lower limit<=Protein<=Upper limit)"
+,,,,,,,,,"If (Sex=Male) IBW = Height-100
+If (Sex=Female) IBW = (Height-100)-(.1*Height)","if(LBM source = Dexa, then LBM=Dexa LBM)
+else (if Sex = Male
+(if (IBW<=CBW then LBM=CBW)
+elseif(LowIBW<=CBW<=HiIBW & if(appearance=Lean,LBM=CBW else LBM=.85*CBW)
+elseif(CBW>HiIBW & if(appearance=lean then LBM=CBW 
+elseif(CBW<=110,(LBM=.70*CBW),elseif(111<=CBW<=120,LBM=.65*CBW),elseif(121<=CBW<=130,LBM=.60*CBW),elseif(131<=CBW<=140,LBM=.55*CBW)
+or
+if Sex = Female
+(if (IBW<=CBW then LBM=CBW)
+elseif(LowIBW<=CBW<=HiIBW & if(appearance=Lean,LBM=CBW else LBM=.80*CBW)
+elseif(CBW<=90,(LBM=.70*CBW),elseif(91<=CBW<=100,LBM=.65*CBW),elseif(101<=CBW<=110,LBM=.60*CBW),elseif(111<=CBW<=120,LBM=.55*CBW)",,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,Collaborative user input,,,,,,,,RMR,TDEE,Goal calories,,Meal by meal breakdown,,,,
+,,,,Style choice,Activity lvl,Food pref,,,1446 Kcal,2241 Kcal,2241 Kcal,,Meal - 1,Protein,44 g,,
+,,,,Moderation,Intermed,Omni,,,Formula Used,,,,,Fat,54 g,,
+,,,,,,,,,"if(Style choice = Fatty protein)
+then RMR = NA
+else RMR = 500+(22*LBM)","if(Style choice = Fatty protein)
+then TDEE = NA
+else 
+TDEE = RMR*Activity lvl","if (style choice = Fatty protein )
+then (Goal calories = NA)
+else((
+if(goal=Lose Fat, then (TDEE-500)
+else if(goal=Gain LBM, then (TDEE+500)
+else if(goal=maint performance, then(TDEE)))",,,Carb,4 g,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,Meal - 2,Protein ,30 g,,
+,Interactive recommendations,,,,,,,,Formula Used,,,,,Fat ,60 g,,
+,,,,Protein range,Fat range,Carb Range,,,Protein,Fat,Carb,,,Carb,55 g,,
+,,,,Upper Limit,Upper limit,291 g,,,"Lower limit formula
+if(goal=lose fat)
+then(if(LBM Source = Dexa)
+then(Lower limit = 2.3*LBM, else(Lower limit = LBM*1.8)
+Or If(goal = Gain LBM)
+then(Lower limit = 1.5*LBM)
+or if(goal = maint perform)
+then(Lower limit = 1.4*LBM)
+
+",Lower limit = 0.2*TDEE,"if Style choice = (Fatty Protein)
+then Daily Carb <=30 g 
+if Style choice = (Low Carb)
+then Daily Carb <=100 g 
+if Style choice = (Keto)
+then Daily Carb <=50 g",,,,,,
+,,,,,,,,,"Upper Limit formula
+if(goal=lose fat)
+then(if(LBM Source = Dexa)
+then(Lower limit = 3.1*LBM, else(Lower limit = LBM*2.7)
+Or If(goal = Gain LBM)
+then(Lower limit = 2*LBM)
+or if(goal = maint perform)
+then(Lower limit = 1.7*LBM)
+",Upper limit = 0.35*TDEE,"if Style choice = (Moderation)
+then Daily Carb = (Goal calories-(Protein*4)+(Fat*4))/4",,Meal - 3,Protein ,40 g,,
+,,,,,,,,,,,,,,Fat,90 g,,
+,,,,,,,,,,,,,,Carb,35 g,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,Case 5 - Anjaney,,,,,,,,,,,,,,,,
+,Problem statement,,,Cricketer wants to Lose fat and improve performance,,,,,,,,,Recommended Solution,,,,
+,,,,,,,,,,,,,,,,,
+,Data collected,,,,,,,,Data calculated,,,,,,,,
+,Physical,Height,CBW,Sex,Appearance,LBM Source,Dexa LBM,,IBW,LBM,,,Total Macros ,,,Formula Used,
+,,160 cm,68 kg,Male,Loose,NA,NA,,60 kg,47 kg,,,Protein,129 g,,Protein,"if(style choice = Keto) then override Protein(Lower Limit & Upper limit)
+KetoProtein lower limit = (.15*goal calories)/4 
+KetoProtein upper limit = (.25*goal calories)/4
+
+else if(style choice = Fatty Protein) then override Protein(Lower Limit & Upper limit)
+&Protein = LBM*ActivityLvl
+
+else select Protein in range (Lower limit<=Protein<=Upper limit)"
+,,,,,,,,,Formula used,,,,Fat ,79 g,,Fat ,"if(style choice = Keto) then override Fat(Lower Limit & Upper limit)
+KetoFat lower limit = (Goal calories - (Protein lower limit*4) - 50)/4
+KetoFat lower limit = (Goal calories - (Protein Upper limit*4) - 50)/4
+
+if(style choice = Fatty Protein) then override Fat(Lower Limit & Upper limit)
+HPHF Fat lower limit = (LBM*Activity level) & HPHF Fat Upper limit = (LBM*Activity level)+50
+
+if(style choice = Low Carb)
+then LowCarb Fat range = 
+((Goal calories-((Protein lower limit)/4)-100)/9)<=Low Carb Fat range<= ((Goal calories-((Protein higher limit)/4)-100)/9)
+
+
+if(style choice = Moderation)
+then Moderation Fat range = 
+((Goal calories-((Protein lower limit)/4)-100)/9)<=Moderation Fat range<= ((Goal calories-((Protein higher limit)/4)-100)/9)"
+,Goal,Lose Fat,Improve athletic performance,,,,,,IBW,LBM,,,Carbs,100 g,,Carbs,"if(style choice = Fatty Protein) then Carb<= 30 g
+if(style choice = Keto) then Carb<= 50 g
+if(style choice = Low carb) then Carb<= 100 g
+if(style choice = Moderation) then Carb<= Upper Limit Carb
+
+else if(style choice = Fatty Protein) then override Protein(Lower Limit & Upper limit)
+&Protein = LBM*ActivityLvl
+
+else select Protein in range (Lower limit<=Protein<=Upper limit)"
+,,,,,,,,,"If (Sex=Male) IBW = Height-100
+If (Sex=Female) IBW = (Height-100)-(.1*Height)","if(LBM source = Dexa, then LBM=Dexa LBM)
+else (if Sex = Male
+(if (IBW<=CBW then LBM=CBW)
+elseif(LowIBW<=CBW<=HiIBW & if(appearance=Lean,LBM=CBW else LBM=.85*CBW)
+elseif(CBW>HiIBW & if(appearance=lean then LBM=CBW 
+elseif(CBW<=110,(LBM=.70*CBW),elseif(111<=CBW<=120,LBM=.65*CBW),elseif(121<=CBW<=130,LBM=.60*CBW),elseif(131<=CBW<=140,LBM=.55*CBW)
+or
+if Sex = Female
+(if (IBW<=CBW then LBM=CBW)
+elseif(LowIBW<=CBW<=HiIBW & if(appearance=Lean,LBM=CBW else LBM=.80*CBW)
+elseif(CBW<=90,(LBM=.70*CBW),elseif(91<=CBW<=100,LBM=.65*CBW),elseif(101<=CBW<=110,LBM=.60*CBW),elseif(111<=CBW<=120,LBM=.55*CBW)",,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,Collaborative user input,,,,,,,,RMR,TDEE,Goal calories,,Meal by meal breakdown,,,,
+,,,,Style choice,Activity lvl,Food pref,,,1547 Kcal,2127 Kcal,1627 Kcal,,Meal - 1,Protein,30 g,,
+,,,,Low carb,Beginner,Vegetarian,,,Formula Used,,,,,Fat,40 g,,
+,,,,,,,,,"if(Style choice = Fatty protein)
+then RMR = NA
+else RMR = 500+(22*LBM)","if(Style choice = Fatty protein)
+then TDEE = NA
+else 
+TDEE = RMR*Activity lvl","if (style choice = Fatty protein )
+then (Goal calories = NA)
+else((
+if(goal=Lose Fat, then (TDEE-500)
+else if(goal=Gain LBM, then (TDEE+500)
+else if(goal=maint performance, then(TDEE)))",,,Carb,15 g,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,Meal - 2,Protein ,32 g,,
+,Interactive recommendations,,,,,,,,Formula Used,,,,,Fat ,10 g,,
+,,,,Protein range,Fat range,Carb Range,,,Protein,Fat,Carb,,,Carb,46 g,,
+,,,,Upper Limit,Upper limit,100 g,,,"Lower limit formula
+if(goal=lose fat)
+then(if(LBM Source = Dexa)
+then(Lower limit = 2.3*LBM, else(Lower limit = LBM*1.8)
+Or If(goal = Gain LBM)
+then(Lower limit = 1.5*LBM)
+or if(goal = maint perform)
+then(Lower limit = 1.4*LBM)
+
+",Lower limit = 0.2*TDEE,"if Style choice = (Fatty Protein)
+then Daily Carb <=30 g 
+if Style choice = (Low Carb)
+then Daily Carb <=100 g 
+if Style choice = (Keto)
+then Daily Carb <=50 g",,,,,,
+,,,,,,,,,"Upper Limit formula
+if(goal=lose fat)
+then(if(LBM Source = Dexa)
+then(Lower limit = 3.1*LBM, else(Lower limit = LBM*2.7)
+Or If(goal = Gain LBM)
+then(Lower limit = 2*LBM)
+or if(goal = maint perform)
+then(Lower limit = 1.7*LBM)
+",Upper limit = 0.35*TDEE,"if Style choice = (Moderation)
+then Daily Carb = (Goal calories-(Protein*4)+(Fat*4))/4",,Meal - 3,Protein ,60 g,,
+,,,,,,,,,,,,,,Fat,43 g,,
+,,,,,,,,,,,,,,Carb,39 g,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,Case 6 - Isha,,,,,,,,,,,,,,,,
+,Problem statement,,,Aspiring marathon runner wants to reduce fat and improve performance,,,,,,,,,Recommended Solution,,,,
+,,,,,,,,,,,,,,,,,
+,Data collected,,,,,,,,Data calculated,,,,,,,,
+,Physical,Height,CBW,Sex,Appearance,LBM Source,Dexa LBM,,IBW,LBM,,,Total Macros ,,,Formula Used,
+,,170 cm,69 kg,Female,Loose,NA,NA,,63 kg,48 kg,,,Protein,129 g,,Protein,"if(style choice = Keto) then override Protein(Lower Limit & Upper limit)
+KetoProtein lower limit = (.15*goal calories)/4 
+KetoProtein upper limit = (.25*goal calories)/4
+
+else if(style choice = Fatty Protein) then override Protein(Lower Limit & Upper limit)
+&Protein = LBM*ActivityLvl
+
+else select Protein in range (Lower limit<=Protein<=Upper limit)"
+,,,,,,,,,Formula used,,,,Fat ,79 g,,Fat ,"if(style choice = Keto) then override Fat(Lower Limit & Upper limit)
+KetoFat lower limit = (Goal calories - (Protein lower limit*4) - 50)/4
+KetoFat lower limit = (Goal calories - (Protein Upper limit*4) - 50)/4
+
+if(style choice = Fatty Protein) then override Fat(Lower Limit & Upper limit)
+HPHF Fat lower limit = (LBM*Activity level) & HPHF Fat Upper limit = (LBM*Activity level)+50
+
+if(style choice = Low Carb)
+then LowCarb Fat range = 
+((Goal calories-((Protein lower limit)/4)-100)/9)<=Low Carb Fat range<= ((Goal calories-((Protein higher limit)/4)-100)/9)
+
+
+if(style choice = Moderation)
+then Moderation Fat range = 
+((Goal calories-((Protein lower limit)/4)-100)/9)<=Moderation Fat range<= ((Goal calories-((Protein higher limit)/4)-100)/9)"
+,Goal,Lose Fat,Improve athletic performance,,,,,,IBW,LBM,,,Carbs,100 g,,Carbs,"if(style choice = Fatty Protein) then Carb<= 30 g
+if(style choice = Keto) then Carb<= 50 g
+if(style choice = Low carb) then Carb<= 100 g
+if(style choice = Moderation) then Carb<= Upper Limit Carb
+
+else if(style choice = Fatty Protein) then override Protein(Lower Limit & Upper limit)
+&Protein = LBM*ActivityLvl
+
+else select Protein in range (Lower limit<=Protein<=Upper limit)"
+,,,,,,,,,"If (Sex=Male) IBW = Height-100
+If (Sex=Female) IBW = (Height-100)-(.1*Height)","if(LBM source = Dexa, then LBM=Dexa LBM)
+else (if Sex = Male
+(if (IBW<=CBW then LBM=CBW)
+elseif(LowIBW<=CBW<=HiIBW & if(appearance=Lean,LBM=CBW else LBM=.85*CBW)
+elseif(CBW>HiIBW & if(appearance=lean then LBM=CBW 
+elseif(CBW<=110,(LBM=.70*CBW),elseif(111<=CBW<=120,LBM=.65*CBW),elseif(121<=CBW<=130,LBM=.60*CBW),elseif(131<=CBW<=140,LBM=.55*CBW)
+or
+if Sex = Female
+(if (IBW<=CBW then LBM=CBW)
+elseif(LowIBW<=CBW<=HiIBW & if(appearance=Lean,LBM=CBW else LBM=.80*CBW)
+elseif(CBW<=90,(LBM=.70*CBW),elseif(91<=CBW<=100,LBM=.65*CBW),elseif(101<=CBW<=110,LBM=.60*CBW),elseif(111<=CBW<=120,LBM=.55*CBW)",,,,,,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,
+,Collaborative user input,,,,,,,,RMR,TDEE,Goal calories,,Meal by meal breakdown,,,,
+,,,,Style choice,Activity lvl,Food pref,,,NA,NA,1512 Kcal,,Meal - 1,Protein,30 g,,
+,,,,Fatty Protein,Beginner,Omnitarian,,,Formula Used,,,,,Fat,40 g,,
+,,,,,,,,,"if(Style choice = Fatty protein)
+then RMR = NA
+else RMR = 500+(22*LBM)","if(Style choice = Fatty protein)
+then TDEE = NA
+else 
+TDEE = RMR*Activity lvl","if (style choice = Fatty protein )
+then (Goal calories = NA)
+else((
+if(goal=Lose Fat, then (TDEE-500)
+else if(goal=Gain LBM, then (TDEE+500)
+else if(goal=maint performance, then(TDEE)))",,,Carb,15 g,,
+,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,Meal - 2,Protein ,32 g,,
+,Interactive recommendations,,,,,,,,Formula Used,,,,,Fat ,10 g,,
+,,,,Protein range,Fat range,Carb Range,,,Protein,Fat,Carb,,,Carb,46 g,,
+,,,,NA,NA,30 g,,,"Lower limit formula
+if(goal=lose fat)
+then(if(LBM Source = Dexa)
+then(Lower limit = 2.3*LBM, else(Lower limit = LBM*1.8)
+Or If(goal = Gain LBM)
+then(Lower limit = 1.5*LBM)
+or if(goal = maint perform)
+then(Lower limit = 1.4*LBM)
+
+",Lower limit = 0.2*TDEE,"if Style choice = (Fatty Protein)
+then Daily Carb <=30 g 
+if Style choice = (Low Carb)
+then Daily Carb <=100 g 
+if Style choice = (Keto)
+then Daily Carb <=50 g",,,,,,
+,,,,,,,,,"Upper Limit formula
+if(goal=lose fat)
+then(if(LBM Source = Dexa)
+then(Lower limit = 3.1*LBM, else(Lower limit = LBM*2.7)
+Or If(goal = Gain LBM)
+then(Lower limit = 2*LBM)
+or if(goal = maint perform)
+then(Lower limit = 1.7*LBM)
+",Upper limit = 0.35*TDEE,"if Style choice = (Moderation)
+then Daily Carb = (Goal calories-(Protein*4)+(Fat*4))/4",,Meal - 3,Protein ,60 g,,
+,,,,,,,,,,,,,,Fat,43 g,,
+,,,,,,,,,,,,,,Carb,39 g,,

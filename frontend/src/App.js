@@ -1,4 +1,3 @@
-// App.js
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Home from './components/Home';
@@ -6,21 +5,22 @@ import Men from './components/Men';
 import Women from './components/Women';
 import Cart from './components/Cart';
 import Checkout from './components/Checkout';
-import CouponModal from './components/CouponModal'; // Import the CouponModal component
+import CouponModal from './components/CouponModal';
 import PacMan from './components/PacMan';
 import Arkanoid from './components/Arkanoid';
 import Game from './components/Game';
+import HealthCalculator from './components/HealthCalculator'; // Import HealthCalculator component
 import './App.css';
 
 function App() {
     const [showCoupon, setShowCoupon] = useState(false);
     const [couponMessage, setCouponMessage] = useState('');
-    const userEmail = 'user@example.com'; // Assuming a static user email for testing purposes
+    const userEmail = 'user@example.com';
 
     // Function to load the container.js script dynamically
     const loadContainerScript = () => {
         const script = document.createElement('script');
-        script.src = '/container.js'; // Path to container.js served by the backend
+        script.src = '/container.js';
         script.async = true;
         script.onload = () => console.log('container.js loaded successfully');
         script.onerror = () => console.error('Failed to load container.js');
@@ -34,7 +34,7 @@ function App() {
             window.dataLayer = [];
         }
         window.dataLayer.push(eventDetail);
-        console.log('Pushed to dataLayer:', eventDetail); // Debug log
+        console.log('Pushed to dataLayer:', eventDetail);
         const customEvent = new CustomEvent('dataLayerPush', { detail: eventDetail });
         window.dispatchEvent(customEvent);
     };
@@ -46,16 +46,9 @@ function App() {
     };
 
     useEffect(() => {
-        // Load container.js on component mount
         loadContainerScript();
-
-        // Provide the callback to show the coupon modal
         window.showCouponModal = handleShowCoupon;
-
-        // Example: Push a page view event when the component mounts
         pushToDataLayer('page_view');
-
-        // Cleanup function to remove the global function
         return () => {
             window.showCouponModal = null;
         };
@@ -105,6 +98,11 @@ function App() {
                                     Fighting Game
                                 </Link>
                             </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/health-calculator" onClick={() => pushToDataLayer('health_calculator_link_click')}>
+                                    Health Calculator
+                                </Link>
+                            </li>
                         </ul>
                     </div>
                 </nav>
@@ -118,6 +116,7 @@ function App() {
                         <Route path="/pacman" element={<PacMan />} />
                         <Route path="/arkanoid" element={<Arkanoid />} />
                         <Route path="/game" element={<Game />} />
+                        <Route path="/health-calculator" element={<HealthCalculator />} /> {/* Add HealthCalculator route */}
                     </Routes>
                 </div>
                 <CouponModal show={showCoupon} onClose={() => setShowCoupon(false)} message={couponMessage} />
