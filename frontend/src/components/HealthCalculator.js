@@ -17,7 +17,7 @@ const HealthCalculator = () => {
 
     const handleCalculate = async () => {
         try {
-            const response = await axios.post('https://9418-2401-4900-1c89-261f-6049-b0ff-62f6-3cf9.ngrok-free.app/calculate', {
+            const response = await axios.post('http://localhost:5002/calculate', {
                 height, weight, age, sex, activity_level: activityLevel,
                 ibw_formula: ibwFormula, rmr_formula: rmrFormula, tdee_formula: tdeeFormula
             });
