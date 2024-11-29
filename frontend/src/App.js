@@ -9,7 +9,11 @@ import CouponModal from './components/CouponModal';
 import PacMan from './components/PacMan';
 import Arkanoid from './components/Arkanoid';
 import Game from './components/Game';
-import HealthCalculator from './components/HealthCalculator'; // Import HealthCalculator component
+import HealthCalculator from './components/HealthCalculator';
+import Demo from './components/Demo';
+import EcommerceDemo from './components/EcommerceDemo';
+import GamesDemo from './components/GamesDemo';
+import HomePage from './components/HomePage';
 import './App.css';
 
 function App() {
@@ -17,7 +21,6 @@ function App() {
     const [couponMessage, setCouponMessage] = useState('');
     const userEmail = 'user@example.com';
 
-    // Function to load the container.js script dynamically
     const loadContainerScript = () => {
         const script = document.createElement('script');
         script.src = '/container.js';
@@ -27,31 +30,16 @@ function App() {
         document.head.appendChild(script);
     };
 
-    // Function to push events to the dataLayer
     const pushToDataLayer = (event) => {
         const eventDetail = { event, timestamp: new Date().toISOString(), userEmail };
         if (!window.dataLayer) {
             window.dataLayer = [];
         }
         window.dataLayer.push(eventDetail);
-        console.log('Pushed to dataLayer:', eventDetail);
-        const customEvent = new CustomEvent('dataLayerPush', { detail: eventDetail });
-        window.dispatchEvent(customEvent);
-    };
-
-    // Show the coupon modal with a custom message
-    const handleShowCoupon = (message) => {
-        setCouponMessage(message);
-        setShowCoupon(true);
     };
 
     useEffect(() => {
         loadContainerScript();
-        window.showCouponModal = handleShowCoupon;
-        pushToDataLayer('page_view');
-        return () => {
-            window.showCouponModal = null;
-        };
     }, []);
 
     return (
@@ -59,43 +47,13 @@ function App() {
             <div className="App">
                 <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                     <Link className="navbar-brand" to="/" onClick={() => pushToDataLayer('home_link_click')}>
-                        Innovative E-Commerce Solutions
+                        Shoonya AI
                     </Link>
                     <div className="collapse navbar-collapse" id="navbarNav">
                         <ul className="navbar-nav">
                             <li className="nav-item">
-                                <Link className="nav-link" to="/men" onClick={() => pushToDataLayer('men_link_click')}>
-                                    Men
-                                </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/women" onClick={() => pushToDataLayer('women_link_click')}>
-                                    Women
-                                </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/cart" onClick={() => pushToDataLayer('cart_link_click')}>
-                                    Cart
-                                </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/checkout" onClick={() => pushToDataLayer('checkout_link_click')}>
-                                    Checkout
-                                </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/pacman" onClick={() => pushToDataLayer('pacman_link_click')}>
-                                    Pac-Man
-                                </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/arkanoid" onClick={() => pushToDataLayer('arkanoid_link_click')}>
-                                    Arkanoid
-                                </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/game" onClick={() => pushToDataLayer('game_link_click')}>
-                                    Fighting Game
+                                <Link className="nav-link" to="/demo" onClick={() => pushToDataLayer('demo_link_click')}>
+                                    Demo
                                 </Link>
                             </li>
                             <li className="nav-item">
@@ -108,23 +66,26 @@ function App() {
                 </nav>
                 <div className="container mt-4">
                     <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/men" element={<Men />} />
-                        <Route path="/women" element={<Women />} />
-                        <Route path="/cart" element={<Cart />} />
-                        <Route path="/checkout" element={<Checkout />} />
-                        <Route path="/pacman" element={<PacMan />} />
-                        <Route path="/arkanoid" element={<Arkanoid />} />
-                        <Route path="/game" element={<Game />} />
-                        <Route path="/health-calculator" element={<HealthCalculator />} /> {/* Add HealthCalculator route */}
+                        <Route path="/" element={<HomePage />} />
+                        <Route path="/demo" element={<Demo />} />
+                        <Route path="/demo/ecommerce" element={<EcommerceDemo />}>
+                            <Route path="home" element={<Home />} />
+                            <Route path="men" element={<Men />} />
+                            <Route path="women" element={<Women />} />
+                            <Route path="cart" element={<Cart />} />
+                            <Route path="checkout" element={<Checkout />} />
+                        </Route>
+                        <Route path="/demo/games" element={<GamesDemo />}>
+                            <Route path="pacman" element={<PacMan />} />
+                            <Route path="arkanoid" element={<Arkanoid />} />
+                            <Route path="game" element={<Game />} />
+                        </Route>
+                        <Route path="/health-calculator" element={<HealthCalculator />} />
                     </Routes>
                 </div>
-                <CouponModal show={showCoupon} onClose={() => setShowCoupon(false)} message={couponMessage} />
             </div>
         </Router>
     );
 }
 
 export default App;
-
-
