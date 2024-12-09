@@ -1,6 +1,6 @@
 /* Hero Section */
 .hero-section {
-    background: url('C:\Users\varun\website_dev\frontend\public\background_image.jpg.jpg') center/cover no-repeat;
+    background: url('../assets/images/hero-image.jpg') center/cover no-repeat;
     padding: 150px 20px;
     text-align: center;
     color: #ffffff;

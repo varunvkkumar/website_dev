@@ -1,10 +1,29 @@
+// src/services/api.js
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/products';
+const instance = axios.create({
+    baseURL: 'http://localhost:5000', // Ensure this matches your backend server URL and port
+});
+
+// Optional: Add interceptors if needed
+// instance.interceptors.request.use(
+//     (config) => {
+//         const token = localStorage.getItem('tokens');
+//         if (token) {
+//             config.headers.Authorization = `Bearer ${token}`;
+//         }
+//         return config;
+//     },
+//     (error) => Promise.reject(error)
+// );
+
+export default instance;
+
+const API_URL = '/api/products';
 
 export const getProducts = async () => {
   try {
-    const response = await axios.get(API_URL);
+    const response = await instance.get(API_URL);
     return response.data;
   } catch (error) {
     console.error('Error fetching products:', error.message);
@@ -14,11 +33,10 @@ export const getProducts = async () => {
 
 export const createProduct = async (product) => {
   try {
-    const response = await axios.post(API_URL, product);
+    const response = await instance.post(API_URL, product);
     return response.data;
   } catch (error) {
     console.error('Error creating product:', error.message);
     throw error;
   }
 };
-

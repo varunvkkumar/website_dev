@@ -1,0 +1,30 @@
+/* src/components/Login.css */
+
+.login-page {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.login-form {
+  display: inline-block;
+  text-align: left;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.login-form button {
+  width: 100%;
+  padding: 10px;
+  background-color: #ffb74d;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+}
+
+.login-form button:hover {
+  background-color: #ffa726;
+}

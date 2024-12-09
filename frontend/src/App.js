@@ -1,90 +1,131 @@
-import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import Home from './components/Home';
-import Men from './components/Men';
-import Women from './components/Women';
-import Cart from './components/Cart';
-import Checkout from './components/Checkout';
-import CouponModal from './components/CouponModal';
-import PacMan from './components/PacMan';
-import Arkanoid from './components/Arkanoid';
-import Game from './components/Game';
-import HealthCalculator from './components/HealthCalculator';
+import React, { useEffect, useState, useContext } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { AuthProvider, AuthContext } from './contexts/AuthContext';
+import HomePage from './components/HomePage';
 import Demo from './components/Demo';
 import EcommerceDemo from './components/EcommerceDemo';
 import GamesDemo from './components/GamesDemo';
-import HomePage from './components/HomePage';
+import HealthCalculator from './components/HealthCalculator/HealthCalculator';
+import AddFeature from './components/AddFeature/AddFeature';
+import AddFormula from './components/AddFormula/AddFormula';
+import Login from './components/Login';
+import Logout from './components/Logout';
+import PrivateRoute from './components/PrivateRoute';
+import SignUp from './components/SignUp';
 import './App.css';
+import { pushToDataLayer } from './utils/analytics';
 
 function App() {
     const [showCoupon, setShowCoupon] = useState(false);
     const [couponMessage, setCouponMessage] = useState('');
-    const userEmail = 'user@example.com';
 
-    const loadContainerScript = () => {
+    useEffect(() => {
         const script = document.createElement('script');
         script.src = '/container.js';
         script.async = true;
-        script.onload = () => console.log('container.js loaded successfully');
-        script.onerror = () => console.error('Failed to load container.js');
         document.head.appendChild(script);
-    };
 
-    const pushToDataLayer = (event) => {
-        const eventDetail = { event, timestamp: new Date().toISOString(), userEmail };
-        if (!window.dataLayer) {
-            window.dataLayer = [];
-        }
-        window.dataLayer.push(eventDetail);
-    };
-
-    useEffect(() => {
-        loadContainerScript();
+        script.onload = () => {
+            pushToDataLayer('container_script_loaded');
+        };
     }, []);
 
     return (
-        <Router>
-            <div className="App">
-                <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-                    <Link className="navbar-brand" to="/" onClick={() => pushToDataLayer('home_link_click')}>
-                        Shoonya AI
-                    </Link>
-                    <div className="collapse navbar-collapse" id="navbarNav">
-                        <ul className="navbar-nav">
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/demo" onClick={() => pushToDataLayer('demo_link_click')}>
-                                    Demo
-                                </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/health-calculator" onClick={() => pushToDataLayer('health_calculator_link_click')}>
-                                    Health Calculator
-                                </Link>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-                <div className="container mt-4">
+        <AuthProvider>
+            <Router>
+                <div className="App">
+                    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+                        <Link className="navbar-brand" to="/">Shoonya AI</Link>
+                        <button 
+                            className="navbar-toggler" 
+                            type="button" 
+                            data-toggle="collapse" 
+                            data-target="#navbarNav"
+                        >
+                            <span className="navbar-toggler-icon"></span>
+                        </button>
+                        <div className="collapse navbar-collapse" id="navbarNav">
+                            <ul className="navbar-nav mr-auto">
+                                <li className="nav-item">
+                                    <Link to="/demo" className="nav-link">Demo</Link>
+                                </li>
+                            </ul>
+                            <ul className="navbar-nav">
+                                <AuthButton />
+                            </ul>
+                        </div>
+                    </nav>
+
                     <Routes>
                         <Route path="/" element={<HomePage />} />
                         <Route path="/demo" element={<Demo />} />
-                        <Route path="/demo/ecommerce" element={<EcommerceDemo />}>
-                            <Route path="home" element={<Home />} />
-                            <Route path="men" element={<Men />} />
-                            <Route path="women" element={<Women />} />
-                            <Route path="cart" element={<Cart />} />
-                            <Route path="checkout" element={<Checkout />} />
-                        </Route>
-                        <Route path="/demo/games" element={<GamesDemo />}>
-                            <Route path="pacman" element={<PacMan />} />
-                            <Route path="arkanoid" element={<Arkanoid />} />
-                            <Route path="game" element={<Game />} />
-                        </Route>
-                        <Route path="/health-calculator" element={<HealthCalculator />} />
+                        <Route path="/demo/ecommerce/*" element={<EcommerceDemo />} />
+                        <Route path="/demo/games/*" element={<GamesDemo />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/signup" element={<SignUp />} />
+                        <Route path="/logout" element={<Logout />} />
+                        <Route
+                            path="/health-calculator"
+                            element={
+                                <PrivateRoute>
+                                    <HealthCalculator />
+                                </PrivateRoute>
+                            }
+                        />
+                        <Route
+                            path="/add-feature"
+                            element={
+                                <PrivateRoute>
+                                    <AddFeature />
+                                </PrivateRoute>
+                            }
+                        />
+                        <Route
+                            path="/add-formula"
+                            element={
+                                <PrivateRoute>
+                                    <AddFormula />
+                                </PrivateRoute>
+                            }
+                        />
                     </Routes>
                 </div>
-            </div>
-        </Router>
+            </Router>
+        </AuthProvider>
+    );
+}
+
+function AuthButton() {
+    const { authTokens, logout } = useContext(AuthContext);
+
+    console.log('AuthButton - authTokens:', authTokens);
+
+    return authTokens ? (
+        <>
+            <li className="nav-item">
+                <Link to="/health-calculator" className="nav-link" onClick={() => pushToDataLayer('health_calculator_click')}>
+                    Health Calculator
+                </Link>
+            </li>
+            <li className="nav-item">
+                <Link to="/logout" className="nav-link" onClick={() => { logout(); pushToDataLayer('logout_click'); }}>
+                    Logout
+                </Link>
+            </li>
+        </>
+    ) : (
+        <>
+            <li className="nav-item">
+                <Link to="/login" className="nav-link" onClick={() => pushToDataLayer('login_click')}>
+                    Login
+                </Link>
+            </li>
+            <li className="nav-item">
+                <Link to="/signup" className="nav-link" onClick={() => pushToDataLayer('signup_click')}>
+                    Sign Up
+                </Link>
+            </li>
+        </>
     );
 }
 

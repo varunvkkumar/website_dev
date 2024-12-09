@@ -1,0 +1,14 @@
+[
+  {
+    "id": "e2c42776-605f-4fa2-967d-d204e26135d6",
+    "email": "test@example.com",
+    "password": "$2a$10$oIfRFzQ.SxLNnACC.MC57.ypqOfX3SO2dCIb53axVXLb7Ib9vCzti",
+    "createdAt": "2024-11-29T20:40:16.569Z"
+  },
+  {
+    "id": "fe24115d-17e1-42b6-ad71-8d6dbb3d900a",
+    "email": "varundce87@gmail.com",
+    "password": "$2a$10$M8KXFEBZaxWwhVOoMLh7C.xYk3TOmz7HuKWxKwbH2IIRUQ6qMUat2",
+    "createdAt": "2024-11-29T23:09:54.224Z"
+  }
+]

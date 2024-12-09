@@ -1,0 +1,73 @@
+/* src/components/EcommerceDemo.css */
+
+.section {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.section-header h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  color: #2196f3;
+}
+
+.section-header p {
+  font-size: 1.2em;
+  margin-bottom: 40px;
+}
+
+.demo-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.demo-links a {
+  color: #0d47a1;
+  font-size: 1.2em;
+  text-decoration: none;
+  margin: 10px 0;
+}
+
+.demo-links a:hover {
+  text-decoration: underline;
+}
+
+.demo-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.demo-card {
+  background-color: #f0f4f8;
+  padding: 30px;
+  margin: 20px;
+  border-radius: 10px;
+  max-width: 300px;
+  flex: 1 1 200px;
+  text-align: left;
+}
+
+.demo-card h2 {
+  font-size: 1.8em;
+  margin-bottom: 15px;
+}
+
+.demo-card p {
+  font-size: 1em;
+  margin-bottom: 20px;
+}
+
+.demo-button {
+  background-color: #ffb74d;
+  color: #ffffff;
+  padding: 10px 20px;
+  text-decoration: none;
+  font-size: 1em;
+  border-radius: 5px;
+}
+
+.demo-button:hover {
+  background-color: #ffa726;
+}

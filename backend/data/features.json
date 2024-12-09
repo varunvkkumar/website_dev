@@ -1,0 +1,27 @@
+[
+  {
+    "id": "height",
+    "label": "Height (cm)",
+    "type": "number",
+    "value": 170
+  },
+  {
+    "id": "weight",
+    "label": "Weight (kg)",
+    "type": "number",
+    "value": 70
+  },
+  {
+    "id": "age",
+    "label": "Age",
+    "type": "number",
+    "value": 30
+  },
+  {
+    "id": "sex",
+    "label": "Sex",
+    "type": "select",
+    "options": ["Male", "Female"],
+    "value": "Male"
+  }
+]

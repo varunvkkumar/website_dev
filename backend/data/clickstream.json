@@ -668,5 +668,71 @@
     "time": "2024-08-26T14:12:12.281Z",
     "userEmail": "user@example.com",
     "eventId": "e5458f92-bb9c-4d60-b4d3-8149b98ad2bd"
+  },
+  {
+    "eventId": "78173922-8281-45d4-a642-46fe48fb51b4",
+    "trackingId": "men_link_click",
+    "timestamp": "2024-11-06T10:18:26.862Z",
+    "userEmail": "user@example.com"
+  },
+  {
+    "eventId": "7d437af2-8b70-4662-90ac-462d73e27ae6",
+    "trackingId": "women_link_click",
+    "timestamp": "2024-11-06T10:18:28.150Z",
+    "userEmail": "user@example.com"
+  },
+  {
+    "eventId": "c148e772-7b48-4e05-b730-eaa2aebbe785",
+    "trackingId": "men_link_click",
+    "timestamp": "2024-11-07T14:28:09.308Z",
+    "userEmail": "user@example.com"
+  },
+  {
+    "eventId": "c1872fd0-0bfd-44e0-bc74-d25111e912ce",
+    "trackingId": "women_link_click",
+    "timestamp": "2024-11-07T14:28:10.106Z",
+    "userEmail": "user@example.com"
+  },
+  {
+    "eventId": "826aa2ad-046a-46b6-a8f1-833fa195a258",
+    "trackingId": "men_link_click",
+    "timestamp": "2024-11-13T07:36:15.260Z",
+    "userEmail": "user@example.com"
+  },
+  {
+    "eventId": "33b9bd74-e636-4b84-a807-db68368f9908",
+    "trackingId": "women_link_click",
+    "timestamp": "2024-11-13T07:36:16.153Z",
+    "userEmail": "user@example.com"
+  },
+  {
+    "eventId": "667c19c7-76e8-4ab1-8c7e-89d4c61066f3",
+    "trackingId": "women_link_click",
+    "timestamp": "2024-11-14T05:44:41.886Z",
+    "userEmail": "user@example.com"
+  },
+  {
+    "eventId": "094270d7-4ca2-428b-b0d9-73dc65aa724d",
+    "trackingId": "men_link_click",
+    "timestamp": "2024-11-29T02:00:21.288Z",
+    "userEmail": "user@example.com"
+  },
+  {
+    "eventId": "b6aa8a21-be6e-45a2-8a6c-c790564c2168",
+    "trackingId": "women_link_click",
+    "timestamp": "2024-11-29T02:00:22.476Z",
+    "userEmail": "user@example.com"
+  },
+  {
+    "eventId": "7d7c7884-9d2f-44b1-a658-d98d2d2e2984",
+    "trackingId": "women_link_click",
+    "timestamp": "2024-11-29T02:00:25.550Z",
+    "userEmail": "user@example.com"
+  },
+  {
+    "eventId": "97bbdfee-a0c7-4583-954a-65ab586feeea",
+    "trackingId": "men_link_click",
+    "timestamp": "2024-11-29T02:00:26.627Z",
+    "userEmail": "user@example.com"
   }
 ]
