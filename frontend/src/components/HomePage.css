@@ -1,9 +1,26 @@
 /* Hero Section */
 .hero-section {
-    background: url('../assets/images/hero-image.jpg') center/cover no-repeat;
-    padding: 150px 20px;
+    /* Since we're applying the background image via inline styles in JavaScript,
+       you can remove or comment out the background-image property here */
+    /* background-image: url('/assets/images/hero-image.jpg'); */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    /* Optional fallback color */
+    background-color: #0000ff; /* For debugging purposes */
+}
+
+.hero-content {
+    color: white;
     text-align: center;
-    color: #ffffff;
+    background: rgba(0, 0, 0, 0.5); /* Optional overlay */
+    padding: 20px;
+    border-radius: 10px;
 }
 
 .hero-content h1 {
@@ -16,17 +33,20 @@
     margin-bottom: 30px;
 }
 
+/* CTA Button */
 .cta-button {
-    background-color: #ff6f00;
-    color: #ffffff;
-    padding: 15px 30px;
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #ff7f50;
+    color: white;
     text-decoration: none;
-    font-size: 1.2em;
     border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
 .cta-button:hover {
-    background-color: #e65100;
+    background-color: #ff6333;
 }
 
 /* About Us Section */
@@ -36,19 +56,23 @@
 }
 
 .about-section h2 {
-    font-size: 2.5em;
     margin-bottom: 20px;
+}
+
+.about-section p {
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
 }
 
 /* Services Section */
 .services-section {
-    background-color: #f5f5f5;
     padding: 60px 20px;
+    background-color: #f5f5f5;
     text-align: center;
 }
 
 .services-section h2 {
-    font-size: 2.5em;
     margin-bottom: 40px;
 }
 
@@ -56,22 +80,24 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    gap: 20px;
 }
 
 .service-item {
-    flex: 1 1 200px;
-    max-width: 300px;
-    margin: 20px;
-    text-align: left;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 250px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .service-item h3 {
-    font-size: 1.5em;
     margin-bottom: 10px;
+    color: #333;
 }
 
 .service-item p {
-    font-size: 1em;
+    color: #666;
 }
 
 /* Technologies Section */
@@ -81,7 +107,6 @@
 }
 
 .technologies-section h2 {
-    font-size: 2.5em;
     margin-bottom: 20px;
 }
 
@@ -91,26 +116,84 @@
 
 /* Contact Section */
 .contact-section {
-    background-color: #0d47a1;
-    color: #ffffff;
     padding: 60px 20px;
+    background-color: #0d47a1;
     text-align: center;
+    color: white;
 }
 
 .contact-section h2 {
-    font-size: 2.5em;
     margin-bottom: 20px;
 }
 
+.contact-section p {
+    max-width: 800px;
+    margin: 0 auto 20px;
+    line-height: 1.6;
+}
+
 .contact-button {
-    background-color: #ff6f00;
-    color: #ffffff;
-    padding: 15px 30px;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff7f50;
+    color: white;
     text-decoration: none;
-    font-size: 1.2em;
     border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
 .contact-button:hover {
-    background-color: #e65100;
+    background-color: #ff6333;
+}
+
+/* Climate Game Section */
+.climate-game-section {
+    padding: 60px 20px;
+    background-color: #e0f7fa;
+    text-align: center;
+}
+
+.climate-game-section h2 {
+    margin-bottom: 20px;
+    color: #00796b;
+}
+
+.climate-game-section p {
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+    color: #004d40;
+}
+
+/* General Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333333;
+}
+
+h2 {
+    font-size: 2em;
+    color: #0d47a1;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .services {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .service-item {
+        width: 100%;
+    }
 }
