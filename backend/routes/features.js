@@ -1,15 +1,21 @@
 // backend/routes/features.js
+
 const express = require('express');
 const router = express.Router();
-const featureController = require('../controllers/featureController');
-const authMiddleware = require('../authMiddleware');
+const { verifyToken } = require('../middleware/authMiddleware');
 
-// Public route to get all features
-router.get('/', featureController.getAllFeatures);
+// Mock database
+let features = [];
 
-// Protected routes
-router.post('/', authMiddleware, featureController.addFeature);
-router.put('/:id', authMiddleware, featureController.updateFeature);
-router.delete('/:id', authMiddleware, featureController.deleteFeature);
+// Add a new feature
+router.post('/', verifyToken, (req, res) => {
+  const { name } = req.body;
+  if (!name) {
+    return res.status(400).json({ message: 'Feature name is required' });
+  }
+  const newFeature = { id: features.length + 1, name };
+  features.push(newFeature);
+  res.status(201).json(newFeature);
+});
 
 module.exports = router;
