@@ -21,7 +21,24 @@
     "id": "sex",
     "label": "Sex",
     "type": "select",
-    "options": ["Male", "Female"],
+    "options": [
+      "Male",
+      "Female"
+    ],
     "value": "Male"
+  },
+  {
+    "id": "blood_pressure",
+    "label": "Blood Pressure",
+    "type": "number",
+    "options": [],
+    "value": null
+  },
+  {
+    "id": "blood_pressure+1",
+    "label": "Blood Pressure+1",
+    "type": "number",
+    "options": [],
+    "value": null
   }
 ]

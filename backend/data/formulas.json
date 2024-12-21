@@ -8,5 +8,15 @@
     "id": "bmr",
     "label": "Basal Metabolic Rate (BMR)",
     "formula": "sex === 'Male' ? (10 * weight + 6.25 * height - 5 * age + 5).toFixed(2) : (10 * weight + 6.25 * height - 5 * age - 161).toFixed(2)"
+  },
+  {
+    "id": "blood_pressure",
+    "label": "Blood Pressure",
+    "formula": "height*1"
+  },
+  {
+    "id": "idea",
+    "label": "idea",
+    "formula": "idea*1"
   }
 ]

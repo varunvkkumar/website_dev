@@ -9,19 +9,35 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const { login } = useContext(AuthContext);
+  const { setAuthTokens } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const result = await login(email, password);
-    if (result.success) {
-      pushToDataLayer('login_success');
-      navigate('/health-calculator'); // Redirect to Health Calculator after login
-    } else {
-      setError(result.error);
-      pushToDataLayer('login_failure', { error: result.error });
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setAuthTokens(data.token);
+        localStorage.setItem('authToken', data.token);
+        pushToDataLayer('login_success');
+        navigate('/health-calculator'); // Redirect to Health Calculator after login
+      } else {
+        setError(data.error);
+        pushToDataLayer('login_failure', { error: data.error });
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      setError('An error occurred during login.');
     }
   };
 
@@ -49,11 +65,13 @@ const Login = () => {
             required
           />
         </div>
-        {error && <p className="text-danger mt-2">{error}</p>}
-        <button type="submit" className="btn btn-primary mt-3">Login</button>
+        {error && <div className="alert alert-danger mt-3">{error}</div>}
+        <button type="submit" className="btn btn-primary mt-3">
+          Login
+        </button>
       </form>
       <p className="mt-3">
-        Don't have an account? <Link to="/signup">Sign Up here</Link>
+        Don't have an account? <Link to="/signup">Sign up here</Link>
       </p>
     </div>
   );

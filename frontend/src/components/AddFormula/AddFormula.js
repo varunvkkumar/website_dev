@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { addFormula } from '../../services/formulaService';
 import { getFeatures } from '../../services/featureService';
 import './AddFormula.css';
+import axios from '../../services/api'; // Use the Axios instance
 
 const AddFormula = () => {
   const [formula, setFormula] = useState({
@@ -36,7 +37,7 @@ const AddFormula = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await addFormula(formula);
+      await axios.post('/api/formulas/', formula);
       alert('Formula added successfully!');
       setFormula({
         id: '',

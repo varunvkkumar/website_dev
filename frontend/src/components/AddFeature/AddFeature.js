@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { addFeature } from '../../services/featureService';
 import './AddFeature.css';
+import axios from '../../services/api'; // Use the Axios instance
 
 const AddFeature = () => {
   const [feature, setFeature] = useState({
@@ -27,7 +28,7 @@ const AddFeature = () => {
       options: feature.type === 'select' ? feature.options.split(',').map(opt => opt.trim()) : []
     };
     try {
-      await addFeature(formattedFeature);
+      await axios.post('/api/features/', formattedFeature);
       alert('Feature added successfully!');
       setFeature({
         id: '',
