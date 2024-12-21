@@ -1,12 +1,10 @@
 // frontend/src/components/AddFormula/AddFormula.js
 import React, { useState, useEffect } from 'react';
-import { addFormula } from '../../services/formulaService';
-import { getFeatures } from '../../services/featureService';
-import './AddFormula.css';
 import axios from '../../services/api'; // Use the Axios instance
+import './AddFormula.css';
 
 const AddFormula = () => {
-  const [formula, setFormula] = useState({
+  const [formulaData, setFormulaData] = useState({
     id: '',
     label: '',
     formula: ''
@@ -17,7 +15,7 @@ const AddFormula = () => {
   useEffect(() => {
     const fetchFeatures = async () => {
       try {
-        const response = await getFeatures();
+        const response = await axios.get('/api/features');
         setFeatures(response.data);
       } catch (err) {
         console.error('Error fetching features:', err);
@@ -28,7 +26,7 @@ const AddFormula = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormula(prev => ({
+    setFormulaData(prev => ({
       ...prev,
       [name]: value
     }));
@@ -37,9 +35,9 @@ const AddFormula = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('/api/formulas/', formula);
+      await axios.post('/api/formulas/', formulaData);
       alert('Formula added successfully!');
-      setFormula({
+      setFormulaData({
         id: '',
         label: '',
         formula: ''
@@ -59,10 +57,10 @@ const AddFormula = () => {
           <input
             type="text"
             name="id"
-            value={formula.id}
+            value={formulaData.id}
             onChange={handleChange}
             required
-            placeholder="e.g., ideal_weight"
+            placeholder="e.g., bmi"
           />
         </div>
         <div>
@@ -70,10 +68,10 @@ const AddFormula = () => {
           <input
             type="text"
             name="label"
-            value={formula.label}
+            value={formulaData.label}
             onChange={handleChange}
             required
-            placeholder="e.g., Ideal Weight (kg)"
+            placeholder="e.g., Body Mass Index"
           />
         </div>
         <div>
@@ -81,10 +79,10 @@ const AddFormula = () => {
           <input
             type="text"
             name="formula"
-            value={formula.formula}
+            value={formulaData.formula}
             onChange={handleChange}
             required
-            placeholder="e.g., (height - 100) * 0.9"
+            placeholder="e.g., weight / ((height/100)^2)"
           />
         </div>
         <p className="formula-hints">

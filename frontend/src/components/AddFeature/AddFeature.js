@@ -1,8 +1,7 @@
 // frontend/src/components/AddFeature/AddFeature.js
 import React, { useState } from 'react';
-import { addFeature } from '../../services/featureService';
-import './AddFeature.css';
 import axios from '../../services/api'; // Use the Axios instance
+import './AddFeature.css';
 
 const AddFeature = () => {
   const [feature, setFeature] = useState({
@@ -17,7 +16,7 @@ const AddFeature = () => {
     const { name, value } = e.target;
     setFeature(prev => ({
       ...prev,
-      [name]: name === 'options' ? value : value
+      [name]: value
     }));
   };
 

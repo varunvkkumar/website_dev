@@ -40,5 +40,26 @@
     "type": "number",
     "options": [],
     "value": null
+  },
+  {
+    "id": "mnkl",
+    "label": "kjnkj",
+    "type": "number",
+    "options": [],
+    "value": null
+  },
+  {
+    "id": "blood_pressure+2",
+    "label": "Blood Pressure+2",
+    "type": "number",
+    "options": [],
+    "value": "4"
+  },
+  {
+    "id": "blood_pressure+3",
+    "label": "height",
+    "type": "number",
+    "options": [],
+    "value": null
   }
 ]

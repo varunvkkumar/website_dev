@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import axios from '../../services/api'; // Use the Axios instance
 import { AuthContext } from '../../contexts/AuthContext';
 import {
   Button,
@@ -25,26 +25,24 @@ function HealthCalculator() {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (authTokens) {
-        try {
-          const [inputsResponse, formulasResponse] = await Promise.all([
-            axios.get('/api/features', {
-              headers: { Authorization: `Bearer ${authTokens.access}` },
-            }),
-            axios.get('/api/formulas', {
-              headers: { Authorization: `Bearer ${authTokens.access}` },
-            }),
-          ]);
-          setInputs(inputsResponse.data);
-          setFormulas(formulasResponse.data);
-        } catch (err) {
-          console.error('Error fetching data:', err);
-        } finally {
-          setLoading(false);
-        }
+      if (!authTokens) return setLoading(false);
+      try {
+        const [inputsResponse, formulasResponse] = await Promise.all([
+          axios.get('/api/features', {
+            headers: { Authorization: `Bearer ${authTokens.access}` },
+          }),
+          axios.get('/api/formulas', {
+            headers: { Authorization: `Bearer ${authTokens.access}` },
+          }),
+        ]);
+        setInputs(inputsResponse.data);
+        setFormulas(formulasResponse.data);
+      } catch (err) {
+        console.error('Error fetching data:', err);
+      } finally {
+        setLoading(false);
       }
     };
-
     fetchData();
   }, [authTokens]);
 
@@ -60,17 +58,16 @@ function HealthCalculator() {
 
   const calculateResults = () => {
     const calculatedResults = {};
-    formulas.forEach((formula) => {
+    formulas.forEach((f) => {
       try {
         const variables = {};
-        inputs.forEach((input) => {
-          variables[input.name] = parseFloat(input.value) || 0;
+        inputs.forEach((feature) => {
+          variables[feature.id] = parseFloat(feature.value) || 0;
         });
-
-        const result = evaluate(formula.expression, variables);
-        calculatedResults[formula.name] = result;
+        const result = evaluate(f.formula, variables);
+        calculatedResults[f.label] = result;
       } catch (err) {
-        calculatedResults[formula.name] = 'Error';
+        calculatedResults[f.label] = 'Error';
       }
     });
     setResults(calculatedResults);
@@ -102,7 +99,7 @@ function HealthCalculator() {
                 color="primary"
                 size="small"
               >
-                Add Formulas
+                Add Formula
               </Button>
             </Box>
           </Grid>
@@ -120,10 +117,10 @@ function HealthCalculator() {
               {/* Display Inputs */}
               <Typography variant="subtitle1">Inputs:</Typography>
               <List dense>
-                {inputs.length > 0 ? (
+                {inputs.length ? (
                   inputs.map((input) => (
                     <ListItem key={input.id}>
-                      <ListItemText primary={input.name} />
+                      <ListItemText primary={input.label} />
                     </ListItem>
                   ))
                 ) : (
@@ -136,12 +133,12 @@ function HealthCalculator() {
                 Formulas:
               </Typography>
               <List dense>
-                {formulas.length > 0 ? (
-                  formulas.map((formula) => (
-                    <ListItem key={formula.id}>
+                {formulas.length ? (
+                  formulas.map((item) => (
+                    <ListItem key={item.id}>
                       <ListItemText
-                        primary={formula.name}
-                        secondary={formula.expression}
+                        primary={item.label}
+                        secondary={item.formula}
                       />
                     </ListItem>
                   ))
@@ -173,13 +170,11 @@ function HealthCalculator() {
                 Results
               </Typography>
               {Object.keys(results).length > 0 ? (
-                <Box>
-                  {Object.entries(results).map(([key, value]) => (
-                    <Typography key={key}>
-                      <strong>{key}:</strong> {value}
-                    </Typography>
-                  ))}
-                </Box>
+                Object.entries(results).map(([label, value]) => (
+                  <Typography key={label}>
+                    <strong>{label}:</strong> {value}
+                  </Typography>
+                ))
               ) : (
                 <Typography>
                   Results will appear here after calculation.
