@@ -1,7 +1,8 @@
-// frontend/src/components/AddFormula/AddFormula.js
 import React, { useState, useEffect } from 'react';
-import axios from '../../services/api'; // Use the Axios instance
+import axios from '../../services/api'; // Ensure this points to your Axios instance
 import './AddFormula.css';
+import { v4 as uuidv4 } from 'uuid';
+import { evaluate } from 'mathjs';
 
 const AddFormula = () => {
   const [formulaData, setFormulaData] = useState({
@@ -11,6 +12,7 @@ const AddFormula = () => {
   });
 
   const [features, setFeatures] = useState([]);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchFeatures = async () => {
@@ -34,6 +36,28 @@ const AddFormula = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validate that the formula references existing feature IDs
+    const variables = formulaData.formula.match(/[a-zA-Z_][a-zA-Z0-9_]*/g) || [];
+    const uniqueVariables = [...new Set(variables)];
+    const featureIds = features.map(feature => feature.id);
+    const invalidVariables = uniqueVariables.filter(v => !featureIds.includes(v));
+
+    if (invalidVariables.length > 0) {
+      setError(`Invalid variables in formula: ${invalidVariables.join(', ')}`);
+      return;
+    }
+
+    // Validate formula syntax
+    try {
+      const dummyVars = {};
+      uniqueVariables.forEach(v => { dummyVars[v] = 1; });
+      evaluate(formulaData.formula, dummyVars);
+    } catch (err) {
+      setError('Invalid formula syntax.');
+      return;
+    }
+
     try {
       await axios.post('/api/formulas/', formulaData);
       alert('Formula added successfully!');
@@ -42,6 +66,7 @@ const AddFormula = () => {
         label: '',
         formula: ''
       });
+      setError('');
     } catch (err) {
       console.error(err);
       alert('Error adding formula.');
@@ -91,6 +116,7 @@ const AddFormula = () => {
             <span key={feature.id}> {feature.id},</span>
           ))}
         </p>
+        {error && <p className="error-message">{error}</p>}
         <button type="submit" className="submit-button">Add Formula</button>
       </form>
     </div>

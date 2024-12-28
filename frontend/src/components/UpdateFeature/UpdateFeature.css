@@ -1,0 +1,44 @@
+.update-feature-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.update-feature-form div {
+  margin-bottom: 15px;
+}
+
+.update-feature-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.update-feature-form input,
+.update-feature-form select {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.error-message {
+  color: red;
+  margin-bottom: 10px;
+}
+
+.success-message {
+  color: green;
+  margin-bottom: 10px;
+}
+
+.submit-button {
+  padding: 10px 20px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #115293;
+}

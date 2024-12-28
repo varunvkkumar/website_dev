@@ -8,6 +8,7 @@ import GamesDemo from './components/GamesDemo';
 import HealthCalculator from './components/HealthCalculator/HealthCalculator';
 import AddFeature from './components/AddFeature/AddFeature';
 import AddFormula from './components/AddFormula/AddFormula';
+import UpdateFeature from './components/UpdateFeature/UpdateFeature';
 import Login from './components/Login';
 import Logout from './components/Logout';
 import PrivateRoute from './components/PrivateRoute';
@@ -85,6 +86,14 @@ function App() {
                             element={
                                 <PrivateRoute>
                                     <AddFormula />
+                                </PrivateRoute>
+                            }
+                        />
+                        <Route
+                            path="/update-feature"
+                            element={
+                                <PrivateRoute>
+                                    <UpdateFeature />
                                 </PrivateRoute>
                             }
                         />

@@ -8,10 +8,15 @@ import {
   Grid,
   Box,
   Paper,
-  Divider,
   List,
   ListItem,
   ListItemText,
+  TableContainer,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { evaluate } from 'mathjs';
@@ -25,7 +30,10 @@ function HealthCalculator() {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!authTokens) return setLoading(false);
+      if (!authTokens) {
+        setLoading(false);
+        return;
+      }
       try {
         const [inputsResponse, formulasResponse] = await Promise.all([
           axios.get('/api/features', {
@@ -46,6 +54,38 @@ function HealthCalculator() {
     fetchData();
   }, [authTokens]);
 
+  const calculateResults = () => {
+    const computed = {};
+
+    if (!formulas.length || !inputs.length) {
+      setResults({});
+      return;
+    }
+
+    formulas.forEach((f) => {
+      if (!computed[f.label]) {
+        computed[f.label] = {};
+      }
+      inputs.forEach((feature) => {
+        if (!Array.isArray(feature.values)) return;
+
+        const transformedEntries = feature.values.map(entry => {
+          try {
+            const variables = { [feature.id]: entry.value };
+            const result = evaluate(f.formula, variables);
+            return { valueId: entry.valueId, valueName: entry.valueName, result };
+          } catch (err) {
+            console.error('Evaluation error:', err);
+            return { valueId: entry.valueId, valueName: entry.valueName, result: 'Error' };
+          }
+        });
+
+        computed[f.label][feature.label] = transformedEntries;
+      });
+    });
+    setResults(computed);
+  };
+
   if (loading) {
     return (
       <Container>
@@ -56,28 +96,13 @@ function HealthCalculator() {
     );
   }
 
-  const calculateResults = () => {
-    const calculatedResults = {};
-    formulas.forEach((f) => {
-      try {
-        const variables = {};
-        inputs.forEach((feature) => {
-          variables[feature.id] = parseFloat(feature.value) || 0;
-        });
-        const result = evaluate(f.formula, variables);
-        calculatedResults[f.label] = result;
-      } catch (err) {
-        calculatedResults[f.label] = 'Error';
-      }
-    });
-    setResults(calculatedResults);
-  };
-
   return (
     <Container maxWidth="lg" sx={{ mt: 4 }}>
       <Paper elevation={3}>
-        <Grid container>
-          {/* Left Sidebar */}
+        {/* The Grid container with 3 columns: 2/5/5 */}
+        <Grid container spacing={2}>
+
+          {/* Left column: Actions */}
           <Grid item xs={12} sm={2} md={2}>
             <Box p={2}>
               <Button
@@ -98,55 +123,72 @@ function HealthCalculator() {
                 variant="contained"
                 color="primary"
                 size="small"
+                sx={{ mb: 2 }}
               >
                 Add Formula
+              </Button>
+              {/* **New Button:** Update Feature */}
+              <Button
+                component={Link}
+                to="/update-feature"
+                fullWidth
+                variant="contained"
+                color="secondary"
+                size="small"
+              >
+                Update Feature
               </Button>
             </Box>
           </Grid>
 
-          {/* Divider */}
-          <Divider orientation="vertical" flexItem />
-
-          {/* Middle Section: Display Inputs and Formulas */}
+          {/* Middle column: Display Inputs and Formulas */}
           <Grid item xs={12} sm={5} md={5}>
             <Box p={2}>
               <Typography variant="h6" gutterBottom>
                 Added Inputs and Formulas
               </Typography>
 
-              {/* Display Inputs */}
+              {/* Inputs List */}
               <Typography variant="subtitle1">Inputs:</Typography>
-              <List dense>
-                {inputs.length ? (
-                  inputs.map((input) => (
+              {inputs.length ? (
+                <List dense>
+                  {inputs.map((input) => (
                     <ListItem key={input.id}>
-                      <ListItemText primary={input.label} />
+                      <ListItemText
+                        primary={`${input.label} (${input.id})`}
+                        secondary={
+                          Array.isArray(input.values)
+                            ? input.values.map(v => {
+                                const nm = v.valueName ? ` | ${v.valueName}` : '';
+                                return `${v.value}${nm}`;
+                              }).join(', ')
+                            : 'No values'
+                        }
+                      />
                     </ListItem>
-                  ))
-                ) : (
-                  <Typography>No inputs added yet.</Typography>
-                )}
-              </List>
+                  ))}
+                </List>
+              ) : (
+                <Typography>No inputs added yet.</Typography>
+              )}
 
-              {/* Display Formulas */}
+              {/* Formulas List */}
               <Typography variant="subtitle1" sx={{ mt: 2 }}>
                 Formulas:
               </Typography>
-              <List dense>
-                {formulas.length ? (
-                  formulas.map((item) => (
-                    <ListItem key={item.id}>
-                      <ListItemText
-                        primary={item.label}
-                        secondary={item.formula}
-                      />
+              {formulas.length ? (
+                <List dense>
+                  {formulas.map((f) => (
+                    <ListItem key={f.id}>
+                      <ListItemText primary={f.label} secondary={f.formula} />
                     </ListItem>
-                  ))
-                ) : (
-                  <Typography>No formulas added yet.</Typography>
-                )}
-              </List>
+                  ))}
+                </List>
+              ) : (
+                <Typography>No formulas added yet.</Typography>
+              )}
 
+              {/* Calculate button */}
               <Box mt={2}>
                 <Button
                   variant="contained"
@@ -160,25 +202,46 @@ function HealthCalculator() {
             </Box>
           </Grid>
 
-          {/* Divider */}
-          <Divider orientation="vertical" flexItem />
-
-          {/* Results Section */}
-          <Grid item xs={12} sm={4} md={4}>
+          {/* Right column: Results table */}
+          <Grid item xs={12} sm={5} md={5}>
             <Box p={2}>
               <Typography variant="h6" gutterBottom>
                 Results
               </Typography>
-              {Object.keys(results).length > 0 ? (
-                Object.entries(results).map(([label, value]) => (
-                  <Typography key={label}>
-                    <strong>{label}:</strong> {value}
-                  </Typography>
+              {Object.keys(results).length ? (
+                Object.entries(results).map(([formulaLabel, featuresMap]) => (
+                  <Box key={formulaLabel} mb={2}>
+                    <Typography variant="subtitle1" gutterBottom>
+                      Formula: {formulaLabel}
+                    </Typography>
+                    <TableContainer component={Paper}>
+                      <Table>
+                        <TableHead>
+                          <TableRow>
+                            <TableCell>Feature</TableCell>
+                            <TableCell>Value ID</TableCell>
+                            <TableCell>Value Name</TableCell>
+                            <TableCell>Result</TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {Object.entries(featuresMap).map(([featLabel, transformedEntries]) => {
+                            return transformedEntries.map(entry => (
+                              <TableRow key={`${featLabel}-${entry.valueId}`}>
+                                <TableCell>{featLabel}</TableCell>
+                                <TableCell>{entry.valueId}</TableCell>
+                                <TableCell>{entry.valueName || 'N/A'}</TableCell>
+                                <TableCell>{entry.result}</TableCell>
+                              </TableRow>
+                            ));
+                          })}
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+                  </Box>
                 ))
               ) : (
-                <Typography>
-                  Results will appear here after calculation.
-                </Typography>
+                <Typography>Results will appear here after calculation.</Typography>
               )}
             </Box>
           </Grid>

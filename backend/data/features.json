@@ -1,65 +1,25 @@
 [
   {
-    "id": "height",
-    "label": "Height (cm)",
-    "type": "number",
-    "value": 170
-  },
-  {
-    "id": "weight",
-    "label": "Weight (kg)",
-    "type": "number",
-    "value": 70
-  },
-  {
-    "id": "age",
-    "label": "Age",
-    "type": "number",
-    "value": 30
-  },
-  {
-    "id": "sex",
-    "label": "Sex",
-    "type": "select",
-    "options": [
-      "Male",
-      "Female"
-    ],
-    "value": "Male"
-  },
-  {
     "id": "blood_pressure",
-    "label": "Blood Pressure",
+    "label": "Blood Pressure (mmHg)",
     "type": "number",
     "options": [],
-    "value": null
-  },
-  {
-    "id": "blood_pressure+1",
-    "label": "Blood Pressure+1",
-    "type": "number",
-    "options": [],
-    "value": null
-  },
-  {
-    "id": "mnkl",
-    "label": "kjnkj",
-    "type": "number",
-    "options": [],
-    "value": null
-  },
-  {
-    "id": "blood_pressure+2",
-    "label": "Blood Pressure+2",
-    "type": "number",
-    "options": [],
-    "value": "4"
-  },
-  {
-    "id": "blood_pressure+3",
-    "label": "height",
-    "type": "number",
-    "options": [],
-    "value": null
+    "values": [
+      {
+        "valueId": "510cba37-ad95-46f9-b6de-a63fd48ec779",
+        "valueName": "varun",
+        "value": 120
+      },
+      {
+        "valueId": "1d7aaa50-02d6-448a-833d-9111043cb9cd",
+        "valueName": "pinku",
+        "value": 130
+      },
+      {
+        "valueId": "29187455-a91a-4834-86dc-0e6607943cf8",
+        "valueName": "Alice",
+        "value": 150
+      }
+    ]
   }
 ]

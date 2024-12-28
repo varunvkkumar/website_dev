@@ -10,5 +10,20 @@
     "email": "varundce87@gmail.com",
     "password": "$2a$10$M8KXFEBZaxWwhVOoMLh7C.xYk3TOmz7HuKWxKwbH2IIRUQ6qMUat2",
     "createdAt": "2024-11-29T23:09:54.224Z"
+  },
+  {
+    "id": "1952db8a-da8d-4eaa-8d8e-d802854128b7",
+    "email": "puneetbehl1991@gmail.com",
+    "password": "$2a$10$.6MF/skvPv/wr4Q38qFA5eNc2bDm5RQxcnmiQkZi0rV5PGNEzD4Jm"
+  },
+  {
+    "id": "2b10b93b-bfcb-49dc-bb65-a3f1988dc0e2",
+    "email": "ketakeekwatra@gmail.com",
+    "password": "$2a$10$F5afW/QSeBPlXrrGGp7ziuYq4lsbROOZ1z83VrFao5625ChCqlZze"
+  },
+  {
+    "id": "397a8853-eccf-41dd-90b6-b8ac07e12213",
+    "email": "varundce87@icloud.com",
+    "password": "$2a$10$kMmzoK9kM9F/wbarsxgLj.koia8zOo0Jwx9I73dyjgb33BJOrT452"
   }
 ]
