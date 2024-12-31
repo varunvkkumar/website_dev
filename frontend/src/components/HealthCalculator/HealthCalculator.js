@@ -16,10 +16,10 @@ import {
   TableHead,
   TableRow,
   TableCell,
-  TableBody
+  TableBody,
+  Alert
 } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { evaluate } from 'mathjs';
 
 function HealthCalculator() {
   const { authTokens } = useContext(AuthContext);
@@ -27,6 +27,7 @@ function HealthCalculator() {
   const [formulas, setFormulas] = useState([]);
   const [results, setResults] = useState({});
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,36 +55,22 @@ function HealthCalculator() {
     fetchData();
   }, [authTokens]);
 
-  const calculateResults = () => {
-    const computed = {};
-
-    if (!formulas.length || !inputs.length) {
-      setResults({});
-      return;
-    }
-
-    formulas.forEach((f) => {
-      if (!computed[f.label]) {
-        computed[f.label] = {};
-      }
-      inputs.forEach((feature) => {
-        if (!Array.isArray(feature.values)) return;
-
-        const transformedEntries = feature.values.map(entry => {
-          try {
-            const variables = { [feature.id]: entry.value };
-            const result = evaluate(f.formula, variables);
-            return { valueId: entry.valueId, valueName: entry.valueName, result };
-          } catch (err) {
-            console.error('Evaluation error:', err);
-            return { valueId: entry.valueId, valueName: entry.valueName, result: 'Error' };
-          }
-        });
-
-        computed[f.label][feature.label] = transformedEntries;
+  const calculateResults = async () => {
+    try {
+      const response = await axios.post('http://localhost:5002/calculate_features', {
+        features: inputs,
+        formulas: formulas
       });
-    });
-    setResults(computed);
+      setResults(response.data);
+      setError(''); // Clear any previous error
+    } catch (err) {
+      console.error('Error calculating results:', err);
+      if (err.response && err.response.data && err.response.data.error) {
+        setError(err.response.data.error); // Set the error message from the response
+      } else {
+        setError('An unexpected error occurred.');
+      }
+    }
   };
 
   if (loading) {
@@ -99,7 +86,6 @@ function HealthCalculator() {
   return (
     <Container maxWidth="lg" sx={{ mt: 4 }}>
       <Paper elevation={3}>
-        {/* The Grid container with 3 columns: 2/5/5 */}
         <Grid container spacing={2}>
 
           {/* Left column: Actions */}
@@ -127,7 +113,6 @@ function HealthCalculator() {
               >
                 Add Formula
               </Button>
-              {/* **New Button:** Update Feature */}
               <Button
                 component={Link}
                 to="/update-feature"
@@ -208,6 +193,11 @@ function HealthCalculator() {
               <Typography variant="h6" gutterBottom>
                 Results
               </Typography>
+              {error && (
+                <Alert severity="error" sx={{ mb: 2 }}>
+                  {error}
+                </Alert>
+              )}
               {Object.keys(results).length ? (
                 Object.entries(results).map(([formulaLabel, featuresMap]) => (
                   <Box key={formulaLabel} mb={2}>

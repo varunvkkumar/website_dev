@@ -19,6 +19,47 @@
         "valueId": "29187455-a91a-4834-86dc-0e6607943cf8",
         "valueName": "Alice",
         "value": 150
+      },
+      {
+        "valueId": "283e790b-6862-480e-8d80-c926c35253e4",
+        "valueName": "ss",
+        "value": 170
+      }
+    ]
+  },
+  {
+    "id": "blood_pressure_200",
+    "label": "Blood Pressure (mmHg)",
+    "type": "number",
+    "options": [],
+    "values": [
+      {
+        "valueId": "11c5c5ca-be20-44bb-800b-228c1e116fca",
+        "valueName": "varun",
+        "value": 120
+      },
+      {
+        "valueId": "fbdba8a3-43f2-4e8b-9cae-2128e98ae3f9",
+        "valueName": "pinku",
+        "value": 130
+      }
+    ]
+  },
+  {
+    "id": "height_7",
+    "label": "height_7",
+    "type": "number",
+    "options": [],
+    "values": [
+      {
+        "valueId": "c48e66cd-7c1c-46ed-b005-44e03d3fee2c",
+        "valueName": "varun",
+        "value": 120
+      },
+      {
+        "valueId": "bba01faa-20e8-478c-afba-794474741fd6",
+        "valueName": "pinku",
+        "value": 130
       }
     ]
   }

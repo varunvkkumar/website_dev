@@ -3,5 +3,20 @@
     "id": "cholestro",
     "label": "Cholestrol (hg)",
     "formula": "blood_pressure*2"
+  },
+  {
+    "id": "heart_risk",
+    "label": "heart_risk (score)",
+    "formula": "blood_pressure*7"
+  },
+  {
+    "id": "Cholestrol+100",
+    "label": "Cholestrol (hg)+100",
+    "formula": "blood_pressure+100/10"
+  },
+  {
+    "id": "height_weight",
+    "label": "height_weight",
+    "formula": "height_7*7 + blood_pressure*2"
   }
 ]

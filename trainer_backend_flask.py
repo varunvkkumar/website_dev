@@ -1,45 +1,88 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from math import *
+import re
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS to allow requests from the React frontend
 
-# Default formulas
-default_ibw_formula = "height - 100 if sex == 'Male' else height - 105"
-default_rmr_formula = "10 * weight + 6.25 * height - 5 * age + (5 if sex == 'Male' else -161)"
-default_tdee_formula = "rmr * activity_level"
-
-def calculate_ibw(height, sex, formula):
-    return eval(formula)
-
-def calculate_rmr(weight, height, age, sex, formula):
-    return eval(formula)
-
-def calculate_tdee(rmr, activity_level, formula):
-    return eval(formula)
-
-@app.route('/calculate', methods=['POST'])
-def calculate():
+@app.route('/calculate_features', methods=['POST'])
+def calculate_features():
     data = request.json
-    height = data.get('height')
-    weight = data.get('weight')
-    age = data.get('age')
-    sex = data.get('sex')
-    activity_level = data.get('activity_level')
-    ibw_formula = data.get('ibw_formula', default_ibw_formula)
-    rmr_formula = data.get('rmr_formula', default_rmr_formula)
-    tdee_formula = data.get('tdee_formula', default_tdee_formula)
+    features = data.get('features')
+    formulas = data.get('formulas')
+
+    if not features or not formulas:
+        return jsonify({"error": "Features and formulas are required."}), 400
+
+    results = {}
 
     try:
-        # Perform calculations based on provided formulas
-        ibw = calculate_ibw(height, sex, ibw_formula)
-        rmr = calculate_rmr(weight, height, age, sex, rmr_formula)
-        tdee = calculate_tdee(rmr, activity_level, tdee_formula)
-        
-        return jsonify({"ibw": ibw, "rmr": rmr, "tdee": tdee}), 200
+        # Create a dictionary to map feature IDs to their values
+        feature_map = {feature['id']: feature for feature in features}
+
+        for formula in formulas:
+            formula_label = formula['label']
+            formula_expression = formula['formula']
+            results[formula_label] = {}
+
+            # Extract the variables (feature IDs) from the formula using regex
+            variables = re.findall(r'\b\w+\b', formula_expression)
+            variables = [var for var in variables if var in feature_map]
+
+            if not variables:
+                return jsonify({"error": f"No matching feature found for formula: {formula_expression}"}), 400
+
+            # Ensure all variables are present in the feature map
+            missing_vars = [var for var in variables if var not in feature_map]
+            if missing_vars:
+                return jsonify({"error": f"Missing features for formula: {formula_expression}. Missing variables: {', '.join(missing_vars)}"}), 400
+
+            # Prepare a list of feature values for each variable
+            feature_values_list = [feature_map[var]['values'] for var in variables]
+
+            # Determine the maximum number of values among all features
+            max_values_length = max(len(values) for values in feature_values_list)
+
+            for i in range(max_values_length):
+                variables_dict = {}
+                transformed_entry = {
+                    "valueId": None,
+                    "valueName": None,
+                    "result": None
+                }
+                valid_entry = True
+
+                for j in range(len(feature_values_list)):
+                    if i < len(feature_values_list[j]):
+                        entry = feature_values_list[j][i]
+                        value_id = entry['valueId']
+                        value_name = entry['valueName']
+                        value = entry['value']
+
+                        # Prepare the variables for evaluation
+                        variables_dict[variables[j]] = value
+
+                        # Set valueId and valueName for the transformed entry
+                        if transformed_entry["valueId"] is None:
+                            transformed_entry["valueId"] = value_id
+                        if transformed_entry["valueName"] is None:
+                            transformed_entry["valueName"] = value_name
+                    else:
+                        valid_entry = False
+
+                # Evaluate the formula with all variables if valid_entry is True
+                if valid_entry:
+                    result = eval(formula_expression, {"__builtins__": None}, variables_dict)
+                    transformed_entry["result"] = result
+
+                if f"Entry {i + 1}" not in results[formula_label]:
+                    results[formula_label][f"Entry {i + 1}"] = []
+                results[formula_label][f"Entry {i + 1}"].append(transformed_entry)
+
+        return jsonify(results), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
 if __name__ == '__main__':
     app.run(debug=True, port=5002)  # Run Flask on port 5002
-
