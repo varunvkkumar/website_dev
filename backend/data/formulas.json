@@ -18,5 +18,10 @@
     "id": "height_weight",
     "label": "height_weight",
     "formula": "height_7*7 + blood_pressure*2"
+  },
+  {
+    "id": "idea_weight",
+    "label": "idea_weight (unit)",
+    "formula": "blood_pressure*2 + idea*5"
   }
 ]

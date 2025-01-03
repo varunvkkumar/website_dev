@@ -2,9 +2,23 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from math import *
 import re
+import json
+import os
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS to allow requests from the React frontend
+
+FEATURES_FILE = 'backend/data/engineered_features.json'
+
+def read_features():
+    if not os.path.exists(FEATURES_FILE):
+        return []
+    with open(FEATURES_FILE, 'r') as file:
+        return json.load(file)
+
+def write_features(features):
+    with open(FEATURES_FILE, 'w') as file:
+        json.dump(features, file, indent=2)
 
 @app.route('/calculate_features', methods=['POST'])
 def calculate_features():
@@ -83,6 +97,20 @@ def calculate_features():
         return jsonify(results), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 400
+
+@app.route('/save_transformed_features', methods=['POST'])
+def save_transformed_features():
+    data = request.json
+    transformed_features = data.get('transformed_features')
+
+    if not transformed_features:
+        return jsonify({"error": "Transformed features are required."}), 400
+
+    existing_features = read_features()
+    existing_features.extend(transformed_features)
+    write_features(existing_features)
+
+    return jsonify({"message": "Transformed features saved successfully."}), 200
 
 if __name__ == '__main__':
     app.run(debug=True, port=5002)  # Run Flask on port 5002

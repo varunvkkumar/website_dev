@@ -62,5 +62,28 @@
         "value": 130
       }
     ]
+  },
+  {
+    "id": "idea",
+    "label": "idea (unit)",
+    "type": "number",
+    "options": [],
+    "values": [
+      {
+        "valueId": "fc47650a-b497-41c5-a234-7459e3f82f51",
+        "valueName": "varun",
+        "value": 120
+      },
+      {
+        "valueId": "529a73a0-cec5-4dc3-804d-7fbd4b29c1dd",
+        "valueName": "pinku",
+        "value": 130
+      },
+      {
+        "valueId": "bfbeb320-d90d-449e-b732-aec1d3261848",
+        "valueName": "ss",
+        "value": 170
+      }
+    ]
   }
 ]

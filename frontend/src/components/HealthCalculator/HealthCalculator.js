@@ -28,6 +28,7 @@ function HealthCalculator() {
   const [results, setResults] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -65,6 +66,33 @@ function HealthCalculator() {
       setError(''); // Clear any previous error
     } catch (err) {
       console.error('Error calculating results:', err);
+      if (err.response && err.response.data && err.response.data.error) {
+        setError(err.response.data.error); // Set the error message from the response
+      } else {
+        setError('An unexpected error occurred.');
+      }
+    }
+  };
+
+  const saveTransformedFeatures = async () => {
+    try {
+      const transformedFeatures = Object.entries(results).map(([formulaLabel, featuresMap]) => {
+        return {
+          id: formulaLabel,
+          label: formulaLabel,
+          type: 'number',
+          options: [],
+          values: Object.values(featuresMap).flat()
+        };
+      });
+
+      await axios.post('http://localhost:5002/save_transformed_features', {
+        transformed_features: transformedFeatures
+      });
+      setSuccessMessage('Transformed features saved successfully.');
+      setError(''); // Clear any previous error
+    } catch (err) {
+      console.error('Error saving transformed features:', err);
       if (err.response && err.response.data && err.response.data.error) {
         setError(err.response.data.error); // Set the error message from the response
       } else {
@@ -198,38 +226,55 @@ function HealthCalculator() {
                   {error}
                 </Alert>
               )}
+              {successMessage && (
+                <Alert severity="success" sx={{ mb: 2 }}>
+                  {successMessage}
+                </Alert>
+              )}
               {Object.keys(results).length ? (
-                Object.entries(results).map(([formulaLabel, featuresMap]) => (
-                  <Box key={formulaLabel} mb={2}>
-                    <Typography variant="subtitle1" gutterBottom>
-                      Formula: {formulaLabel}
-                    </Typography>
-                    <TableContainer component={Paper}>
-                      <Table>
-                        <TableHead>
-                          <TableRow>
-                            <TableCell>Feature</TableCell>
-                            <TableCell>Value ID</TableCell>
-                            <TableCell>Value Name</TableCell>
-                            <TableCell>Result</TableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          {Object.entries(featuresMap).map(([featLabel, transformedEntries]) => {
-                            return transformedEntries.map(entry => (
-                              <TableRow key={`${featLabel}-${entry.valueId}`}>
-                                <TableCell>{featLabel}</TableCell>
-                                <TableCell>{entry.valueId}</TableCell>
-                                <TableCell>{entry.valueName || 'N/A'}</TableCell>
-                                <TableCell>{entry.result}</TableCell>
-                              </TableRow>
-                            ));
-                          })}
-                        </TableBody>
-                      </Table>
-                    </TableContainer>
+                <>
+                  {Object.entries(results).map(([formulaLabel, featuresMap]) => (
+                    <Box key={formulaLabel} mb={2}>
+                      <Typography variant="subtitle1" gutterBottom>
+                        Formula: {formulaLabel}
+                      </Typography>
+                      <TableContainer component={Paper}>
+                        <Table>
+                          <TableHead>
+                            <TableRow>
+                              <TableCell>Feature</TableCell>
+                              <TableCell>Value ID</TableCell>
+                              <TableCell>Value Name</TableCell>
+                              <TableCell>Result</TableCell>
+                            </TableRow>
+                          </TableHead>
+                          <TableBody>
+                            {Object.entries(featuresMap).map(([featLabel, transformedEntries]) => {
+                              return transformedEntries.map(entry => (
+                                <TableRow key={`${featLabel}-${entry.valueId}`}>
+                                  <TableCell>{featLabel}</TableCell>
+                                  <TableCell>{entry.valueId}</TableCell>
+                                  <TableCell>{entry.valueName || 'N/A'}</TableCell>
+                                  <TableCell>{entry.result}</TableCell>
+                                </TableRow>
+                              ));
+                            })}
+                          </TableBody>
+                        </Table>
+                      </TableContainer>
+                    </Box>
+                  ))}
+                  <Box mt={2}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      size="medium"
+                      onClick={saveTransformedFeatures}
+                    >
+                      Save Transformed Features
+                    </Button>
                   </Box>
-                ))
+                </>
               ) : (
                 <Typography>Results will appear here after calculation.</Typography>
               )}

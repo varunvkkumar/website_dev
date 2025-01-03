@@ -30,5 +30,15 @@
     "id": "e820207f-cb23-4421-ab3e-b749bc11bca6",
     "email": "pushparanibehl@gmail.com",
     "password": "$2a$10$TFw3WBF/Bk7qx002S1Vh3O4jzWgOUrLZUVyW6opXfuWAXnjfFILFG"
+  },
+  {
+    "id": "304d7b6b-d81a-45ca-a14f-2e5c1ad343df",
+    "email": "vk@gmail.com",
+    "password": "$2a$10$YywZN4EPlkjjEt.awAO/cOTGnSfVb9YHGXRGHMA8cTesX8B9nyui."
+  },
+  {
+    "id": "065b3b98-43d7-4709-97a3-5a561970afbe",
+    "email": "pushpkumar@gmail.com",
+    "password": "$2a$10$ze251SsznMDLL3Jt/RAp5u6kX/De/F6YJf4pL6IcRtuGRbk1dgCLK"
   }
 ]
