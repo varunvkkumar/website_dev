@@ -12,7 +12,7 @@
   {
     "id": "Cholestrol+100",
     "label": "Cholestrol (hg)+100",
-    "formula": "blood_pressure+100/10"
+    "formula": "blood_pressure+100/10+200"
   },
   {
     "id": "height_weight",

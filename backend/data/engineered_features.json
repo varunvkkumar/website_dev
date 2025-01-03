@@ -250,5 +250,455 @@
         "valueName": "ss"
       }
     ]
+  },
+  {
+    "id": "Cholestrol (hg)",
+    "label": "Cholestrol (hg)",
+    "type": "number",
+    "options": [],
+    "values": [
+      {
+        "result": 240,
+        "valueId": "510cba37-ad95-46f9-b6de-a63fd48ec779",
+        "valueName": "varun"
+      },
+      {
+        "result": 260,
+        "valueId": "1d7aaa50-02d6-448a-833d-9111043cb9cd",
+        "valueName": "pinku"
+      },
+      {
+        "result": 300,
+        "valueId": "29187455-a91a-4834-86dc-0e6607943cf8",
+        "valueName": "Alice"
+      },
+      {
+        "result": 340,
+        "valueId": "283e790b-6862-480e-8d80-c926c35253e4",
+        "valueName": "ss"
+      }
+    ]
+  },
+  {
+    "id": "Cholestrol (hg)+100",
+    "label": "Cholestrol (hg)+100",
+    "type": "number",
+    "options": [],
+    "values": [
+      {
+        "result": 130,
+        "valueId": "510cba37-ad95-46f9-b6de-a63fd48ec779",
+        "valueName": "varun"
+      },
+      {
+        "result": 140,
+        "valueId": "1d7aaa50-02d6-448a-833d-9111043cb9cd",
+        "valueName": "pinku"
+      },
+      {
+        "result": 160,
+        "valueId": "29187455-a91a-4834-86dc-0e6607943cf8",
+        "valueName": "Alice"
+      },
+      {
+        "result": 180,
+        "valueId": "283e790b-6862-480e-8d80-c926c35253e4",
+        "valueName": "ss"
+      }
+    ]
+  },
+  {
+    "id": "heart_risk (score)",
+    "label": "heart_risk (score)",
+    "type": "number",
+    "options": [],
+    "values": [
+      {
+        "result": 840,
+        "valueId": "510cba37-ad95-46f9-b6de-a63fd48ec779",
+        "valueName": "varun"
+      },
+      {
+        "result": 910,
+        "valueId": "1d7aaa50-02d6-448a-833d-9111043cb9cd",
+        "valueName": "pinku"
+      },
+      {
+        "result": 1050,
+        "valueId": "29187455-a91a-4834-86dc-0e6607943cf8",
+        "valueName": "Alice"
+      },
+      {
+        "result": 1190,
+        "valueId": "283e790b-6862-480e-8d80-c926c35253e4",
+        "valueName": "ss"
+      }
+    ]
+  },
+  {
+    "id": "height_weight",
+    "label": "height_weight",
+    "type": "number",
+    "options": [],
+    "values": [
+      {
+        "result": 1080,
+        "valueId": "c48e66cd-7c1c-46ed-b005-44e03d3fee2c",
+        "valueName": "varun"
+      },
+      {
+        "result": 1170,
+        "valueId": "bba01faa-20e8-478c-afba-794474741fd6",
+        "valueName": "pinku"
+      },
+      {
+        "result": null,
+        "valueId": "29187455-a91a-4834-86dc-0e6607943cf8",
+        "valueName": "Alice"
+      },
+      {
+        "result": null,
+        "valueId": "283e790b-6862-480e-8d80-c926c35253e4",
+        "valueName": "ss"
+      }
+    ]
+  },
+  {
+    "id": "idea_weight (unit)",
+    "label": "idea_weight (unit)",
+    "type": "number",
+    "options": [],
+    "values": [
+      {
+        "result": 840,
+        "valueId": "510cba37-ad95-46f9-b6de-a63fd48ec779",
+        "valueName": "varun"
+      },
+      {
+        "result": 910,
+        "valueId": "1d7aaa50-02d6-448a-833d-9111043cb9cd",
+        "valueName": "pinku"
+      },
+      {
+        "result": 1150,
+        "valueId": "29187455-a91a-4834-86dc-0e6607943cf8",
+        "valueName": "Alice"
+      },
+      {
+        "result": null,
+        "valueId": "283e790b-6862-480e-8d80-c926c35253e4",
+        "valueName": "ss"
+      }
+    ]
+  },
+  {
+    "id": "Cholestrol (hg)",
+    "label": "Cholestrol (hg)",
+    "type": "number",
+    "options": [],
+    "values": [
+      {
+        "result": 240,
+        "valueId": "510cba37-ad95-46f9-b6de-a63fd48ec779",
+        "valueName": "varun"
+      },
+      {
+        "result": 260,
+        "valueId": "1d7aaa50-02d6-448a-833d-9111043cb9cd",
+        "valueName": "pinku"
+      },
+      {
+        "result": 300,
+        "valueId": "29187455-a91a-4834-86dc-0e6607943cf8",
+        "valueName": "Alice"
+      },
+      {
+        "result": 340,
+        "valueId": "283e790b-6862-480e-8d80-c926c35253e4",
+        "valueName": "ss"
+      }
+    ]
+  },
+  {
+    "id": "Cholestrol (hg)+100",
+    "label": "Cholestrol (hg)+100",
+    "type": "number",
+    "options": [],
+    "values": [
+      {
+        "result": 130,
+        "valueId": "510cba37-ad95-46f9-b6de-a63fd48ec779",
+        "valueName": "varun"
+      },
+      {
+        "result": 140,
+        "valueId": "1d7aaa50-02d6-448a-833d-9111043cb9cd",
+        "valueName": "pinku"
+      },
+      {
+        "result": 160,
+        "valueId": "29187455-a91a-4834-86dc-0e6607943cf8",
+        "valueName": "Alice"
+      },
+      {
+        "result": 180,
+        "valueId": "283e790b-6862-480e-8d80-c926c35253e4",
+        "valueName": "ss"
+      }
+    ]
+  },
+  {
+    "id": "heart_risk (score)",
+    "label": "heart_risk (score)",
+    "type": "number",
+    "options": [],
+    "values": [
+      {
+        "result": 840,
+        "valueId": "510cba37-ad95-46f9-b6de-a63fd48ec779",
+        "valueName": "varun"
+      },
+      {
+        "result": 910,
+        "valueId": "1d7aaa50-02d6-448a-833d-9111043cb9cd",
+        "valueName": "pinku"
+      },
+      {
+        "result": 1050,
+        "valueId": "29187455-a91a-4834-86dc-0e6607943cf8",
+        "valueName": "Alice"
+      },
+      {
+        "result": 1190,
+        "valueId": "283e790b-6862-480e-8d80-c926c35253e4",
+        "valueName": "ss"
+      }
+    ]
+  },
+  {
+    "id": "height_weight",
+    "label": "height_weight",
+    "type": "number",
+    "options": [],
+    "values": [
+      {
+        "result": 1080,
+        "valueId": "c48e66cd-7c1c-46ed-b005-44e03d3fee2c",
+        "valueName": "varun"
+      },
+      {
+        "result": 1170,
+        "valueId": "bba01faa-20e8-478c-afba-794474741fd6",
+        "valueName": "pinku"
+      },
+      {
+        "result": null,
+        "valueId": "29187455-a91a-4834-86dc-0e6607943cf8",
+        "valueName": "Alice"
+      },
+      {
+        "result": null,
+        "valueId": "283e790b-6862-480e-8d80-c926c35253e4",
+        "valueName": "ss"
+      }
+    ]
+  },
+  {
+    "id": "idea_weight (unit)",
+    "label": "idea_weight (unit)",
+    "type": "number",
+    "options": [],
+    "values": [
+      {
+        "result": 840,
+        "valueId": "510cba37-ad95-46f9-b6de-a63fd48ec779",
+        "valueName": "varun"
+      },
+      {
+        "result": 910,
+        "valueId": "1d7aaa50-02d6-448a-833d-9111043cb9cd",
+        "valueName": "pinku"
+      },
+      {
+        "result": 1150,
+        "valueId": "29187455-a91a-4834-86dc-0e6607943cf8",
+        "valueName": "Alice"
+      },
+      {
+        "result": 940,
+        "valueId": "283e790b-6862-480e-8d80-c926c35253e4",
+        "valueName": "ss"
+      },
+      {
+        "result": null,
+        "valueId": "14264acc-4cb1-4f3b-b1c0-1afad17e7fa3",
+        "valueName": "pinku"
+      }
+    ]
+  },
+  {
+    "id": "Cholestrol (hg)",
+    "label": "Cholestrol (hg)",
+    "type": "number",
+    "options": [],
+    "values": [
+      {
+        "result": 240,
+        "valueId": "510cba37-ad95-46f9-b6de-a63fd48ec779",
+        "valueName": "varun"
+      },
+      {
+        "result": 260,
+        "valueId": "1d7aaa50-02d6-448a-833d-9111043cb9cd",
+        "valueName": "pinku"
+      },
+      {
+        "result": 300,
+        "valueId": "29187455-a91a-4834-86dc-0e6607943cf8",
+        "valueName": "Alice"
+      },
+      {
+        "result": 340,
+        "valueId": "283e790b-6862-480e-8d80-c926c35253e4",
+        "valueName": "ss"
+      },
+      {
+        "result": 340,
+        "valueId": "3bd55fd6-1365-492a-8ce3-d9b580f11968",
+        "valueName": "ss"
+      }
+    ]
+  },
+  {
+    "id": "Cholestrol (hg)+100",
+    "label": "Cholestrol (hg)+100",
+    "type": "number",
+    "options": [],
+    "values": [
+      {
+        "result": 330,
+        "valueId": "510cba37-ad95-46f9-b6de-a63fd48ec779",
+        "valueName": "varun"
+      },
+      {
+        "result": 340,
+        "valueId": "1d7aaa50-02d6-448a-833d-9111043cb9cd",
+        "valueName": "pinku"
+      },
+      {
+        "result": 360,
+        "valueId": "29187455-a91a-4834-86dc-0e6607943cf8",
+        "valueName": "Alice"
+      },
+      {
+        "result": 380,
+        "valueId": "283e790b-6862-480e-8d80-c926c35253e4",
+        "valueName": "ss"
+      },
+      {
+        "result": 380,
+        "valueId": "3bd55fd6-1365-492a-8ce3-d9b580f11968",
+        "valueName": "ss"
+      }
+    ]
+  },
+  {
+    "id": "heart_risk (score)",
+    "label": "heart_risk (score)",
+    "type": "number",
+    "options": [],
+    "values": [
+      {
+        "result": 840,
+        "valueId": "510cba37-ad95-46f9-b6de-a63fd48ec779",
+        "valueName": "varun"
+      },
+      {
+        "result": 910,
+        "valueId": "1d7aaa50-02d6-448a-833d-9111043cb9cd",
+        "valueName": "pinku"
+      },
+      {
+        "result": 1050,
+        "valueId": "29187455-a91a-4834-86dc-0e6607943cf8",
+        "valueName": "Alice"
+      },
+      {
+        "result": 1190,
+        "valueId": "283e790b-6862-480e-8d80-c926c35253e4",
+        "valueName": "ss"
+      },
+      {
+        "result": 1190,
+        "valueId": "3bd55fd6-1365-492a-8ce3-d9b580f11968",
+        "valueName": "ss"
+      }
+    ]
+  },
+  {
+    "id": "height_weight",
+    "label": "height_weight",
+    "type": "number",
+    "options": [],
+    "values": [
+      {
+        "result": 1080,
+        "valueId": "c48e66cd-7c1c-46ed-b005-44e03d3fee2c",
+        "valueName": "varun"
+      },
+      {
+        "result": 1170,
+        "valueId": "bba01faa-20e8-478c-afba-794474741fd6",
+        "valueName": "pinku"
+      },
+      {
+        "result": null,
+        "valueId": "29187455-a91a-4834-86dc-0e6607943cf8",
+        "valueName": "Alice"
+      },
+      {
+        "result": null,
+        "valueId": "283e790b-6862-480e-8d80-c926c35253e4",
+        "valueName": "ss"
+      },
+      {
+        "result": null,
+        "valueId": "3bd55fd6-1365-492a-8ce3-d9b580f11968",
+        "valueName": "ss"
+      }
+    ]
+  },
+  {
+    "id": "idea_weight (unit)",
+    "label": "idea_weight (unit)",
+    "type": "number",
+    "options": [],
+    "values": [
+      {
+        "result": 840,
+        "valueId": "510cba37-ad95-46f9-b6de-a63fd48ec779",
+        "valueName": "varun"
+      },
+      {
+        "result": 910,
+        "valueId": "1d7aaa50-02d6-448a-833d-9111043cb9cd",
+        "valueName": "pinku"
+      },
+      {
+        "result": 1150,
+        "valueId": "29187455-a91a-4834-86dc-0e6607943cf8",
+        "valueName": "Alice"
+      },
+      {
+        "result": 940,
+        "valueId": "283e790b-6862-480e-8d80-c926c35253e4",
+        "valueName": "ss"
+      },
+      {
+        "result": 990,
+        "valueId": "3bd55fd6-1365-492a-8ce3-d9b580f11968",
+        "valueName": "ss"
+      }
+    ]
   }
 ]

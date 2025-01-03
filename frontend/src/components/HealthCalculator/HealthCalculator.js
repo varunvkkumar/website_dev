@@ -17,7 +17,13 @@ import {
   TableRow,
   TableCell,
   TableBody,
-  Alert
+  Alert,
+  TextField,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 
@@ -29,6 +35,8 @@ function HealthCalculator() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [open, setOpen] = useState(false);
+  const [selectedFormula, setSelectedFormula] = useState({ id: '', label: '', formula: '' });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -101,6 +109,41 @@ function HealthCalculator() {
     }
   };
 
+  const handleClickOpen = (formula) => {
+    setSelectedFormula(formula);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setSelectedFormula((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleUpdate = async () => {
+    try {
+      await axios.put(`http://localhost:5002/api/formulas/${selectedFormula.id}`, selectedFormula, {
+        headers: { Authorization: `Bearer ${authTokens.access}` },
+      });
+      setFormulas((prev) =>
+        prev.map((formula) => (formula.id === selectedFormula.id ? selectedFormula : formula))
+      );
+      setSuccessMessage('Formula updated successfully.');
+      setError('');
+      handleClose();
+    } catch (err) {
+      console.error('Error updating formula:', err);
+      if (err.response && err.response.data && err.response.data.error) {
+        setError(err.response.data.error); // Set the error message from the response
+      } else {
+        setError('An unexpected error occurred.');
+      }
+    }
+  };
+
   if (loading) {
     return (
       <Container>
@@ -148,8 +191,19 @@ function HealthCalculator() {
                 variant="contained"
                 color="secondary"
                 size="small"
+                sx={{ mb: 2 }}
               >
                 Update Feature
+              </Button>
+              <Button
+                component={Link}
+                to="/update-formula"
+                fullWidth
+                variant="contained"
+                color="secondary"
+                size="small"
+              >
+                Update Formula
               </Button>
             </Box>
           </Grid>
@@ -192,7 +246,7 @@ function HealthCalculator() {
               {formulas.length ? (
                 <List dense>
                   {formulas.map((f) => (
-                    <ListItem key={f.id}>
+                    <ListItem key={f.id} button onClick={() => handleClickOpen(f)}>
                       <ListItemText primary={f.label} secondary={f.formula} />
                     </ListItem>
                   ))}
@@ -282,6 +336,43 @@ function HealthCalculator() {
           </Grid>
         </Grid>
       </Paper>
+
+      {/* Update Formula Dialog */}
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Update Formula</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Update the details of the formula below.
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            name="label"
+            label="Label"
+            type="text"
+            fullWidth
+            value={selectedFormula.label}
+            onChange={handleChange}
+          />
+          <TextField
+            margin="dense"
+            name="formula"
+            label="Formula"
+            type="text"
+            fullWidth
+            value={selectedFormula.formula}
+            onChange={handleChange}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleUpdate} color="primary">
+            Update
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 }

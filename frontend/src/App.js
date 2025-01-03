@@ -9,6 +9,7 @@ import HealthCalculator from './components/HealthCalculator/HealthCalculator';
 import AddFeature from './components/AddFeature/AddFeature';
 import AddFormula from './components/AddFormula/AddFormula';
 import UpdateFeature from './components/UpdateFeature/UpdateFeature';
+import UpdateFormula from './components/UpdateFormula/UpdateFormula';
 import Login from './components/Login';
 import Logout from './components/Logout';
 import PrivateRoute from './components/PrivateRoute';
@@ -94,6 +95,14 @@ function App() {
                             element={
                                 <PrivateRoute>
                                     <UpdateFeature />
+                                </PrivateRoute>
+                            }
+                        />
+                        <Route
+                            path="/update-formula"
+                            element={
+                                <PrivateRoute>
+                                    <UpdateFormula />
                                 </PrivateRoute>
                             }
                         />
