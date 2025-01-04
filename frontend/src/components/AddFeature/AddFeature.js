@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import axios from '../../services/api';
 import { v4 as uuidv4 } from 'uuid';
+import { useNavigate } from 'react-router-dom';
 import './AddFeature.css';
 
 const AddFeature = () => {
+  const navigate = useNavigate();
   const [feature, setFeature] = useState({
     id: '',
     label: '',
@@ -120,6 +122,7 @@ const AddFeature = () => {
           Add Feature
         </button>
       </form>
+      <button onClick={() => navigate('/health-calculator')} className="back-button">Back</button>
     </div>
   );
 };

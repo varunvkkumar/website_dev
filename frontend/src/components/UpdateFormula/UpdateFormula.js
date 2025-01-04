@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../../services/api';
+import { useNavigate } from 'react-router-dom';
 import './UpdateFormula.css';
 
 const UpdateFormula = () => {
+  const navigate = useNavigate();
   const [formulas, setFormulas] = useState([]);
   const [selectedFormulaId, setSelectedFormulaId] = useState('');
   const [labelInput, setLabelInput] = useState('');
@@ -109,6 +111,7 @@ const UpdateFormula = () => {
           Update Formula
         </button>
       </form>
+      <button onClick={() => navigate('/health-calculator')} className="back-button">Back</button>
     </div>
   );
 };

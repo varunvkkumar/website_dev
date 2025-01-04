@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../../services/api'; // Ensure this points to your Axios instance
+import { useNavigate } from 'react-router-dom';
 import './AddFormula.css';
 import { v4 as uuidv4 } from 'uuid';
 import { evaluate } from 'mathjs';
 
 const AddFormula = () => {
+  const navigate = useNavigate();
   const [formulaData, setFormulaData] = useState({
     id: '',
     label: '',
@@ -119,6 +121,7 @@ const AddFormula = () => {
         {error && <p className="error-message">{error}</p>}
         <button type="submit" className="submit-button">Add Formula</button>
       </form>
+      <button onClick={() => navigate('/health-calculator')} className="back-button">Back</button>
     </div>
   );
 };
