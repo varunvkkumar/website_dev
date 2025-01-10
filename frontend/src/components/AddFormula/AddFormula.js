@@ -14,13 +14,18 @@ const AddFormula = () => {
   });
 
   const [features, setFeatures] = useState([]);
+  const [engineeredFeatures, setEngineeredFeatures] = useState([]);
   const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchFeatures = async () => {
       try {
-        const response = await axios.get('/api/features');
-        setFeatures(response.data);
+        const [featuresResponse, engineeredFeaturesResponse] = await Promise.all([
+          axios.get('/api/features'),
+          axios.get('/api/engineered_features')
+        ]);
+        setFeatures(featuresResponse.data);
+        setEngineeredFeatures(engineeredFeaturesResponse.data);
       } catch (err) {
         console.error('Error fetching features:', err);
       }
@@ -42,7 +47,7 @@ const AddFormula = () => {
     // Validate that the formula references existing feature IDs
     const variables = formulaData.formula.match(/[a-zA-Z_][a-zA-Z0-9_]*/g) || [];
     const uniqueVariables = [...new Set(variables)];
-    const featureIds = features.map(feature => feature.id);
+    const featureIds = [...features, ...engineeredFeatures].map(feature => feature.id);
     const invalidVariables = uniqueVariables.filter(v => !featureIds.includes(v));
 
     if (invalidVariables.length > 0) {
@@ -114,7 +119,7 @@ const AddFormula = () => {
         </div>
         <p className="formula-hints">
           Use feature IDs in your formula. Available features:
-          {features.map(feature => (
+          {[...features, ...engineeredFeatures].map(feature => (
             <span key={feature.id}> {feature.id},</span>
           ))}
         </p>

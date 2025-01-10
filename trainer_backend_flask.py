@@ -8,17 +8,19 @@ import os
 app = Flask(__name__)
 CORS(app)  # Enable CORS to allow requests from the React frontend
 
-FEATURES_FILE = 'backend/data/engineered_features.json'
+FEATURES_FILE = 'backend/data/features.json'
+ENGINEERED_FEATURES_FILE = 'backend/data/engineered_features.json'
+FORMULAS_FILE = 'backend/data/formulas.json'
 
-def read_features():
-    if not os.path.exists(FEATURES_FILE):
+def read_json(file_path):
+    if not os.path.exists(file_path):
         return []
-    with open(FEATURES_FILE, 'r') as file:
+    with open(file_path, 'r') as file:
         return json.load(file)
 
-def write_features(features):
-    with open(FEATURES_FILE, 'w') as file:
-        json.dump(features, file, indent=2)
+def write_json(data, file_path):
+    with open(file_path, 'w') as file:
+        json.dump(data, file, indent=2)
 
 @app.route('/calculate_features', methods=['POST'])
 def calculate_features():
@@ -106,11 +108,41 @@ def save_transformed_features():
     if not transformed_features:
         return jsonify({"error": "Transformed features are required."}), 400
 
-    existing_features = read_features()
+    existing_features = read_json(ENGINEERED_FEATURES_FILE)
     existing_features.extend(transformed_features)
-    write_features(existing_features)
+    write_json(existing_features, ENGINEERED_FEATURES_FILE)
 
     return jsonify({"message": "Transformed features saved successfully."}), 200
+
+@app.route('/api/formulas/<id>', methods=['PUT'])
+def update_formula(id):
+    data = request.json
+    updated_formula = {
+        "id": id,
+        "label": data.get('label'),
+        "formula": data.get('formula')
+    }
+
+    formulas = read_json(FORMULAS_FILE)
+    formula_index = next((index for (index, f) in enumerate(formulas) if f['id'] == id), None)
+
+    if formula_index is None:
+        return jsonify({"error": "Formula not found."}), 404
+
+    formulas[formula_index] = updated_formula
+    write_json(formulas, FORMULAS_FILE)
+
+    return jsonify({"message": "Formula updated successfully."}), 200
+
+@app.route('/api/features', methods=['GET'])
+def get_features():
+    features = read_json(FEATURES_FILE)
+    return jsonify(features), 200
+
+@app.route('/api/engineered_features', methods=['GET'])
+def get_engineered_features():
+    engineered_features = read_json(ENGINEERED_FEATURES_FILE)
+    return jsonify(engineered_features), 200
 
 if __name__ == '__main__':
     app.run(debug=True, port=5002)  # Run Flask on port 5002

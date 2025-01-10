@@ -7,7 +7,7 @@
   {
     "id": "heart_risk",
     "label": "heart_risk (score)",
-    "formula": "blood_pressure*7"
+    "formula": "blood_pressure*7*5"
   },
   {
     "id": "Cholestrol+100",
@@ -23,5 +23,10 @@
     "id": "idea_weight",
     "label": "idea_weight (unit)",
     "formula": "blood_pressure*2 + idea*5"
+  },
+  {
+    "id": "blood_pressure____1",
+    "label": "blood_pressure____1",
+    "formula": "blood_pressure * 3 + idea"
   }
 ]
