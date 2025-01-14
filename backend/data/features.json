@@ -105,5 +105,64 @@
         "value": 130
       }
     ]
+  },
+  {
+    "id": "Height",
+    "label": "height",
+    "type": "number",
+    "options": [],
+    "values": [
+      {
+        "valueId": "892d7ab5-f8e5-43bf-a40a-93eeea939e51",
+        "valueName": "varun",
+        "value": 120
+      },
+      {
+        "valueId": "c532cf13-1ece-49b4-9cdb-02886aa85eaf",
+        "valueName": "pinku",
+        "value": 130
+      }
+    ]
+  },
+  {
+    "id": "qwqw",
+    "label": "qqwqw",
+    "type": "number",
+    "options": [],
+    "values": [
+      {
+        "valueId": "b0a5937a-4198-42d9-8927-c372f996aa31",
+        "valueName": "varun",
+        "value": 120
+      },
+      {
+        "valueId": "31af23d2-61e2-4f9d-bf95-7c70842ad41e",
+        "valueName": "pinku",
+        "value": 130
+      }
+    ]
+  },
+  {
+    "id": "idea_1",
+    "label": "idea_Score",
+    "type": "number",
+    "options": [],
+    "values": [
+      {
+        "valueId": "d81ca040-36f9-41d5-80a6-6e86b9afd33e",
+        "valueName": "varun",
+        "value": 120
+      },
+      {
+        "valueId": "3eff9a2b-39c6-401f-bccf-cea985ef1cba",
+        "valueName": "pinku",
+        "value": 130
+      },
+      {
+        "valueId": "699ac59e-d2eb-4b8b-b24c-3d650f85bd41",
+        "valueName": "Alice",
+        "value": 150
+      }
+    ]
   }
 ]

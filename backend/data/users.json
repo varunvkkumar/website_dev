@@ -40,5 +40,15 @@
     "id": "065b3b98-43d7-4709-97a3-5a561970afbe",
     "email": "pushpkumar@gmail.com",
     "password": "$2a$10$ze251SsznMDLL3Jt/RAp5u6kX/De/F6YJf4pL6IcRtuGRbk1dgCLK"
+  },
+  {
+    "id": "430b8109-d0f3-48e1-8424-844e480e6ec6",
+    "email": "pushpa@gmail.com",
+    "password": "$2a$10$V.VID3uEofjngKIVP0BMsudE5r9sJgCzcq3Bd.xj.q7v8ojjhUVxK"
+  },
+  {
+    "id": "4f5ea202-c153-40a5-8372-0c2b4838c900",
+    "email": "ketakee@gmail.com",
+    "password": "$2a$10$ZW3QMOl6PX.DRv6Ko3C0X.1WQWmHPgyiqEZDZZTowGMRMsCqVQtcq"
   }
 ]

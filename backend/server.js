@@ -24,6 +24,7 @@ const authMiddleware = require('./authMiddleware');
 const featureRoutes = require('./routes/features');
 const formulaRoutes = require('./routes/formulas');
 const authRoutes = require('./routes/auth'); // Import auth routes
+const engineeredFeatureRoutes = require('./routes/engineeredFeatures'); // new route
 
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
@@ -48,6 +49,7 @@ app.use(express.static(path.join(__dirname, '../frontend/build')));
 app.use('/api/auth', authRoutes);
 app.use('/api/features', featureRoutes);
 app.use('/api/formulas', formulaRoutes);
+app.use('/api/engineered_features', engineeredFeatureRoutes);
 
 // Catch-all handler to serve the React frontend for any other routes
 app.get('*', (req, res) => {

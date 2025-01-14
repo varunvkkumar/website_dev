@@ -137,7 +137,9 @@ def update_formula(id):
 @app.route('/api/features', methods=['GET'])
 def get_features():
     features = read_json(FEATURES_FILE)
-    return jsonify(features), 200
+    engineered_features = read_json(ENGINEERED_FEATURES_FILE)
+    all_features = features + engineered_features
+    return jsonify(all_features), 200
 
 @app.route('/api/engineered_features', methods=['GET'])
 def get_engineered_features():

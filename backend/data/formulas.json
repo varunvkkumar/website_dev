@@ -28,5 +28,30 @@
     "id": "blood_pressure____1",
     "label": "blood_pressure____1",
     "formula": "blood_pressure * 3 + idea"
+  },
+  {
+    "id": "lklk",
+    "label": "kjnkj",
+    "formula": "blood_pressure*2"
+  },
+  {
+    "id": "ds",
+    "label": "sd",
+    "formula": "blood_pressure*2*1"
+  },
+  {
+    "id": "klnlkn",
+    "label": "llkmlkm",
+    "formula": "blood_pressure*2*4*5"
+  },
+  {
+    "id": "kjkjn",
+    "label": "kjnkjn",
+    "formula": " height_7*2"
+  },
+  {
+    "id": "blood_pressure___1",
+    "label": "Blood Pressure (mmHg)",
+    "formula": "blood_pressure*2*3*4*5"
   }
 ]
