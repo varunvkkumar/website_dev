@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:443',
+  baseURL: 'https://www.shoonyaai.com/',
 });
 
 instance.interceptors.request.use(
