@@ -192,34 +192,8 @@ function AITransformationHub() {
           <Grid item xs={12} sm={5} md={5}>
             <Box p={2}>
               <Typography variant="h6" gutterBottom>
-                Added Inputs and Formulas
+                All Transformations
               </Typography>
-
-              {/* Inputs List */}
-              <Typography variant="subtitle1">Inputs:</Typography>
-              {inputs.length ? (
-                <List dense>
-                  {inputs.map((input) => (
-                    <ListItem key={input.id}>
-                      <ListItemText
-                        primary={`${input.label} (${input.id})`}
-                        secondary={
-                          Array.isArray(input.values)
-                            ? input.values
-                                .map((v) => {
-                                  const nm = v.valueName ? ` | ${v.valueName}` : '';
-                                  return `${v.value}${nm}`;
-                                })
-                                .join(', ')
-                            : 'No values'
-                        }
-                      />
-                    </ListItem>
-                  ))}
-                </List>
-              ) : (
-                <Typography>No inputs added yet.</Typography>
-              )}
 
               {/* Formulas List */}
               <Typography variant="subtitle1" sx={{ mt: 2 }}>
