@@ -183,17 +183,7 @@ function AITransformationHub() {
                 size="small"
                 sx={{ mb: 2 }}
               >
-                Update Feature
-              </Button>
-              <Button
-                component={Link}
-                to="/update-formula"
-                fullWidth
-                variant="contained"
-                color="secondary"
-                size="small"
-              >
-                Update Formula
+                Add Data
               </Button>
             </Box>
           </Grid>
