@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:5000', // Update to your domain
+  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5000', // Update to your domain
   headers: {
     'Content-Type': 'application/json'
   }

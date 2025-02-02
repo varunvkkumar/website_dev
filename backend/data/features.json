@@ -187,5 +187,23 @@
         "value": 170
       }
     ]
+  },
+  {
+    "id": "l,km",
+    "label": "lm",
+    "type": "number",
+    "options": [],
+    "values": [
+      {
+        "valueId": "873263fd-8f18-4eec-aeb4-2a8795c2b7a6",
+        "valueName": "varun",
+        "value": 120
+      },
+      {
+        "valueId": "1ea5e3e8-724b-4b62-be92-481a6cd21379",
+        "valueName": "pinku",
+        "value": 130
+      }
+    ]
   }
 ]
