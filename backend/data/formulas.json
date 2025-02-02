@@ -2,7 +2,7 @@
   {
     "id": "cholestro",
     "label": "Cholestrol (hg)lk",
-    "formula": "blood_pressure*2"
+    "formula": "blood_pressure*2+1"
   },
   {
     "id": "heart_risk",
@@ -58,5 +58,10 @@
     "id": ",, ",
     "label": ".,m",
     "formula": "blood_pressure*2"
+  },
+  {
+    "id": "lkklmk",
+    "label": "lklkm",
+    "formula": "height_7+555565+1"
   }
 ]
