@@ -111,7 +111,7 @@ const UpdateFormula = () => {
           Update Formula
         </button>
       </form>
-      <button onClick={() => navigate('/health-calculator')} className="back-button">Back</button>
+      <button onClick={() => navigate('/AI-transformation-hub')} className="back-button">Back</button>
     </div>
   );
 };

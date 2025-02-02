@@ -164,5 +164,28 @@
         "value": 150
       }
     ]
+  },
+  {
+    "id": "knkn",
+    "label": "Blood Pressure (mmHg)",
+    "type": "number",
+    "options": [],
+    "values": [
+      {
+        "valueId": "f325f8b0-206f-4327-8468-275b861984fb",
+        "valueName": "varun",
+        "value": 120
+      },
+      {
+        "valueId": "c6c8dc81-f3ca-4bd4-8d1d-96a351d07e48",
+        "valueName": "pinku",
+        "value": 130
+      },
+      {
+        "valueId": "5ea4b4aa-8f45-4887-a7d2-2b92ef149801",
+        "valueName": "ss",
+        "value": 170
+      }
+    ]
   }
 ]

@@ -126,7 +126,7 @@ const AddFormula = () => {
         {error && <p className="error-message">{error}</p>}
         <button type="submit" className="submit-button">Add Formula</button>
       </form>
-      <button onClick={() => navigate('/health-calculator')} className="back-button">Back</button>
+      <button onClick={() => navigate('/AI-transformation-hub')} className="back-button">Back</button>
     </div>
   );
 };

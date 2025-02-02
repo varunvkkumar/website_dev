@@ -1,9 +1,10 @@
+// backend/routes/features.js
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
 const path = require('path');
-const authMiddleware = require('../authMiddleware');
-const { v4: uuidv4 } = require('uuid'); // Import uuidv4
+// Removed: const authMiddleware = require('../authMiddleware');
+const { v4: uuidv4 } = require('uuid');
 
 // Path to features.json
 const FEATURES_FILE = path.join(__dirname, '../data/features.json');
@@ -22,14 +23,14 @@ function writeFeatures(features) {
   fs.writeFileSync(FEATURES_FILE, JSON.stringify(features, null, 2), 'utf8');
 }
 
-// Get all features
-router.get('/', authMiddleware, (req, res) => {
+// Get all features (public)
+router.get('/', (req, res) => {
   const features = readFeatures();
   res.json(features);
 });
 
-// Add a new feature
-router.post('/', authMiddleware, (req, res) => {
+// Add a new feature (public)
+router.post('/', (req, res) => {
   const { id, label, type, options, values } = req.body;
   if (!id || !label || !type) {
     return res.status(400).json({ message: 'ID, label, and type are required.' });
@@ -50,8 +51,8 @@ router.post('/', authMiddleware, (req, res) => {
   res.status(201).json(newFeature);
 });
 
-// Update a feature
-router.put('/:id', authMiddleware, (req, res) => {
+// Update a feature (public)
+router.put('/:id', (req, res) => {
   const { id } = req.params;
   const { label, type, options, values } = req.body;
   const features = readFeatures();
@@ -70,8 +71,8 @@ router.put('/:id', authMiddleware, (req, res) => {
   res.json(features[featureIndex]);
 });
 
-// Delete a feature
-router.delete('/:id', authMiddleware, (req, res) => {
+// Delete a feature (public)
+router.delete('/:id', (req, res) => {
   const { id } = req.params;
   const features = readFeatures();
   const featureIndex = features.findIndex(f => f.id === id);
@@ -83,8 +84,8 @@ router.delete('/:id', authMiddleware, (req, res) => {
   res.json({ message: 'Feature deleted successfully.', feature: deletedFeature[0] });
 });
 
-// **New Route:** Add Values to an Existing Feature
-router.post('/:id/values', authMiddleware, (req, res) => {
+// New Route: Add Values to an Existing Feature (public)
+router.post('/:id/values', (req, res) => {
   const { id } = req.params;
   const { values } = req.body; // Expecting an array of { valueName, value }
 
@@ -118,3 +119,4 @@ router.post('/:id/values', authMiddleware, (req, res) => {
 });
 
 module.exports = router;
+

@@ -1,17 +1,17 @@
+// backend/routes/formulas.js
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
 const path = require('path');
-const authMiddleware = require('../authMiddleware');
+// Removed: const authMiddleware = require('../authMiddleware');
 const { evaluate } = require('mathjs');
 
 // Path to formulas.json
 const FORMULAS_FILE = path.join(__dirname, '../data/formulas.json');
-
 // Path to features.json (for validation)
 const FEATURES_FILE = path.join(__dirname, '../data/features.json');
 
-// Helper function to read formulas from the file
+// Helper function to read formulas
 const readFormulas = () => {
   if (!fs.existsSync(FORMULAS_FILE)) {
     fs.writeFileSync(FORMULAS_FILE, JSON.stringify([]), 'utf8');
@@ -20,12 +20,12 @@ const readFormulas = () => {
   return JSON.parse(data);
 };
 
-// Helper function to write formulas to the file
+// Helper function to write formulas
 const writeFormulas = (formulas) => {
   fs.writeFileSync(FORMULAS_FILE, JSON.stringify(formulas, null, 2), 'utf8');
 };
 
-// Helper function to read features from the file
+// Helper function to read features (for validating formula variables)
 const readFeatures = () => {
   if (!fs.existsSync(FEATURES_FILE)) {
     fs.writeFileSync(FEATURES_FILE, JSON.stringify([]), 'utf8');
@@ -34,14 +34,14 @@ const readFeatures = () => {
   return JSON.parse(data);
 };
 
-// Get all formulas
-router.get('/', authMiddleware, (req, res) => {
+// Get all formulas (public)
+router.get('/', (req, res) => {
   const formulas = readFormulas();
   res.json(formulas);
 });
 
-// Add a new formula
-router.post('/', authMiddleware, (req, res) => {
+// Add a new formula (public)
+router.post('/', (req, res) => {
   const { id, label, formula } = req.body;
 
   // Validate required fields
@@ -69,7 +69,6 @@ router.post('/', authMiddleware, (req, res) => {
 
   // Validate formula syntax
   try {
-    // Dummy evaluation to check syntax
     const dummyVars = {};
     uniqueVariables.forEach(v => { dummyVars[v] = 1; });
     evaluate(formula, dummyVars);
@@ -77,19 +76,14 @@ router.post('/', authMiddleware, (req, res) => {
     return res.status(400).json({ message: 'Invalid formula syntax.' });
   }
 
-  const newFormula = {
-    id,
-    label,
-    formula
-  };
-
+  const newFormula = { id, label, formula };
   formulas.push(newFormula);
   writeFormulas(formulas);
   res.status(201).json(newFormula);
 });
 
-// Update an existing formula
-router.put('/:id', authMiddleware, (req, res) => {
+// Update an existing formula (public)
+router.put('/:id', (req, res) => {
   const { id } = req.params;
   const { label, formula } = req.body;
 
@@ -100,7 +94,7 @@ router.put('/:id', authMiddleware, (req, res) => {
     return res.status(404).json({ message: 'Formula not found.' });
   }
 
-  // Validate formula if it's being updated
+  // If updating formula text, validate it
   if (formula) {
     const features = readFeatures();
     const featureIds = features.map(feature => feature.id);
@@ -131,8 +125,8 @@ router.put('/:id', authMiddleware, (req, res) => {
   res.json(formulas[formulaIndex]);
 });
 
-// Delete a formula
-router.delete('/:id', authMiddleware, (req, res) => {
+// Delete a formula (public)
+router.delete('/:id', (req, res) => {
   const { id } = req.params;
 
   const formulas = readFormulas();
@@ -144,8 +138,8 @@ router.delete('/:id', authMiddleware, (req, res) => {
 
   const deletedFormula = formulas.splice(formulaIndex, 1);
   writeFormulas(formulas);
-
   res.json({ message: 'Formula deleted successfully.', formula: deletedFormula[0] });
 });
 
 module.exports = router;
+

@@ -14,6 +14,7 @@ import Login from './components/Login';
 import Logout from './components/Logout';
 import PrivateRoute from './components/PrivateRoute';
 import SignUp from './components/SignUp';
+import AITransformationHub from './components/AITransformationHub/AITransformationHub'; // Import DataTransformationHub
 import './App.css';
 import { pushToDataLayer } from './utils/analytics';
 
@@ -66,46 +67,12 @@ function App() {
                         <Route path="/login" element={<Login />} />
                         <Route path="/signup" element={<SignUp />} />
                         <Route path="/logout" element={<Logout />} />
-                        <Route
-                            path="/health-calculator"
-                            element={
-                                <PrivateRoute>
-                                    <HealthCalculator />
-                                </PrivateRoute>
-                            }
-                        />
-                        <Route
-                            path="/add-feature"
-                            element={
-                                <PrivateRoute>
-                                    <AddFeature />
-                                </PrivateRoute>
-                            }
-                        />
-                        <Route
-                            path="/add-formula"
-                            element={
-                                <PrivateRoute>
-                                    <AddFormula />
-                                </PrivateRoute>
-                            }
-                        />
-                        <Route
-                            path="/update-feature"
-                            element={
-                                <PrivateRoute>
-                                    <UpdateFeature />
-                                </PrivateRoute>
-                            }
-                        />
-                        <Route
-                            path="/update-formula"
-                            element={
-                                <PrivateRoute>
-                                    <UpdateFormula />
-                                </PrivateRoute>
-                            }
-                        />
+                        <Route path="/health-calculator" element={<PrivateRoute><HealthCalculator /></PrivateRoute>} />
+                        <Route path="/add-feature" element={<AddFeature />} />
+                        <Route path="/add-formula" element={<AddFormula />} />
+                        <Route path="/update-feature" element={<UpdateFeature />} />
+                        <Route path="/update-formula" element={<UpdateFormula />} />
+                        <Route path="/AI-transformation-hub" element={<AITransformationHub />} /> {/* No PrivateRoute wrapper */}
                     </Routes>
                 </div>
             </Router>
@@ -141,6 +108,11 @@ function AuthButton() {
             <li className="nav-item">
                 <Link to="/signup" className="nav-link" onClick={() => pushToDataLayer('signup_click')}>
                     Sign Up
+                </Link>
+            </li>
+            <li className="nav-item">
+                <Link to="/AI-transformation-hub" className="nav-link" onClick={() => pushToDataLayer('AI-transformation-hub')}>
+                AI-Transformation-Hub
                 </Link>
             </li>
         </>
