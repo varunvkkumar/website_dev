@@ -19,40 +19,47 @@ function HomePage() {
       {/* Hero Section */}
       <section className="hero-section" style={heroStyle}>
         <div className="hero-content">
-          <h1>Empowering Innovation with AI-Powered Solutions</h1>
-          <p>Transforming industries through cutting-edge artificial intelligence technologies.</p>
+          <h1>Offering Domain Specific AI Models and Agentic Solutions to Transform Industries</h1>
+          <p>Empowering Innovation and problem solving through cutting-edge artificial intelligence technologies.</p>
           <a href="#contact" className="cta-button">Get in Touch</a>
         </div>
       </section>
 
       {/* About Us Section */}
       <section className="about-section">
-        <h2>About Shoonya AI</h2>
+        <h2>About Atharva AI</h2>
         <p>
-          Shoonya AI is a premier AI company committed to developing innovative AI products across various domains.
-          Our mission is to harness the power of artificial intelligence to drive transformation and growth for businesses worldwide.
+        Atharva AI is a leading company dedicated to delivering domain-specific AI models and agentic solutions that transform industries.
+        By harnessing domain data, and cutting-edge artificial intelligence technologies including Machine Learning, Deep Learning, Transfer Learning, Process Modeling, and Operation Research 
+        we empower innovation and enable effective problem solving, driving growth and transformation for businesses worldwide.
+        </p>
+        <p>
+        We offer a wide range of tailored AI products and services—from bespoke predictive, generative, process and OR models,
+        to autonomous agents that streamline operations and enhance decision-making. 
         </p>
       </section>
 
       {/* Services Section */}
       <section className="services-section">
-        <h2>Our Services</h2>
+        <h2>Our Products</h2>
         <div className="services">
           <div className="service-item">
-            <h3>Health</h3>
-            <p>Revolutionizing healthcare with AI solutions for improved patient outcomes and operational efficiency.</p>
+            <h3>Domain-Specific AI Models</h3>
+            <p>
+            Custom AI models deployable on our servers, your infrastructure, or edge devices like mobile phones and Raspberry Pi.
+            </p>
           </div>
           <div className="service-item">
-            <h3>Marketing Tech</h3>
-            <p>Enhancing customer engagement through AI-driven marketing tools and analytics.</p>
+            <h3>Domain-Specific AI Agents</h3>
+            <p>
+            Intelligent agents powered by specialized or foundation models, optimized for on-premises, cloud, or edge environments.
+            </p>
           </div>
           <div className="service-item">
-            <h3>Gaming</h3>
-            <p>Creating immersive gaming experiences powered by advanced AI technologies.</p>
-          </div>
-          <div className="service-item">
-            <h3>Energy</h3>
-            <p>Optimizing energy consumption with AI for sustainable and efficient operations.</p>
+            <h3>AI Transformation Hub</h3>
+            <p>
+            A unified platform to consolidate your data and build custom AI models on our scalable compute infrastructure.
+            </p>
           </div>
         </div>
       </section>
