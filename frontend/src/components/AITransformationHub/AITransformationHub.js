@@ -185,6 +185,17 @@ function AITransformationHub() {
               >
                 Add Data
               </Button>
+              <Button
+                component={Link}
+                to="/add-ai"
+                fullWidth
+                variant="contained"
+                color="secondary"
+                size="small"
+                sx={{ mb: 2 }}
+              >
+                Add AI
+              </Button>
             </Box>
           </Grid>
 
@@ -334,4 +345,3 @@ function AITransformationHub() {
 }
 
 export default AITransformationHub;
-

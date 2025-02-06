@@ -15,6 +15,7 @@ import Logout from './components/Logout';
 import PrivateRoute from './components/PrivateRoute';
 import SignUp from './components/SignUp';
 import AITransformationHub from './components/AITransformationHub/AITransformationHub'; // Import DataTransformationHub
+import AddAI from './components/AddAI/AddAI'; // Import AddAI component
 import './App.css';
 import { pushToDataLayer } from './utils/analytics';
 
@@ -38,7 +39,7 @@ function App() {
             <Router>
                 <div className="App">
                     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-                        <Link className="navbar-brand" to="/">Shoonya AI</Link>
+                        <Link className="navbar-brand" to="/">Atharva AI</Link>
                         <button 
                             className="navbar-toggler" 
                             type="button" 
@@ -73,6 +74,7 @@ function App() {
                         <Route path="/update-feature" element={<UpdateFeature />} />
                         <Route path="/update-formula" element={<UpdateFormula />} />
                         <Route path="/AI-transformation-hub" element={<AITransformationHub />} /> {/* No PrivateRoute wrapper */}
+                        <Route path="/add-ai" element={<AddAI />} /> {/* Add route for AddAI */}
                     </Routes>
                 </div>
             </Router>

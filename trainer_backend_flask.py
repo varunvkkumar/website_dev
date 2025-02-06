@@ -4,9 +4,13 @@ from math import *
 import re
 import json
 import os
+import openai
+from openai import OpenAI
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS to allow requests from the React frontend
+
+openai_client = OpenAI()
 
 FEATURES_FILE = 'backend/data/features.json'
 ENGINEERED_FEATURES_FILE = 'backend/data/engineered_features.json'
@@ -21,6 +25,61 @@ def read_json(file_path):
 def write_json(data, file_path):
     with open(file_path, 'w') as file:
         json.dump(data, file, indent=2)
+
+def get_completion_from_messages_json(
+    system_text: str,
+    user_text,
+    model="gpt-4o",
+    temperature=0,
+    max_tokens=500
+):
+    """
+    Takes the raw text from the prior step and asks the model to convert it into valid JSON.
+    This is handy if the first step doesn't perfectly return JSON every time.
+    """
+    response = openai_client.chat.completions.create(
+        model=model,
+        messages=[
+            {
+            "role": "system",
+            "content": system_text,
+            },
+            {
+            "role": "user",
+            "content": user_text,
+            }
+        ],
+        temperature=temperature,
+        max_tokens=max_tokens
+    )
+    return response.choices[0].message.content
+
+@app.route('/transform_with_openai', methods=['POST'])
+def transform_with_openai():
+    data = request.json
+    feature_id = data.get('feature')
+    print(feature_id)
+    system_prompt = data.get('system_prompt')
+    print(system_prompt)
+    if not feature_id or not system_prompt:
+        return jsonify({"error": "Feature and system prompt are required."}), 400
+
+    features = read_json(FEATURES_FILE) + read_json(ENGINEERED_FEATURES_FILE)
+    
+    feature = next((f for f in features if f['id'] == feature_id), None)
+    if not feature:
+        return jsonify({"error": "Feature not found."}), 404
+    print(feature)
+    transformed_values = []
+    for value_obj in feature.get('values', []):
+        value = value_obj.get('value')
+        if value is not None:
+            transformed_value = get_completion_from_messages_json(system_prompt, str(value))
+            transformed_values.append({
+                "original_value": value,
+                "transformed_value": transformed_value
+            })
+    return jsonify({"transformed_values": transformed_values}), 200
 
 @app.route('/calculate_features', methods=['POST'])
 def calculate_features():
