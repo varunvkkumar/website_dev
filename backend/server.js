@@ -10,8 +10,19 @@ const cors = require('cors');
 const { body, validationResult } = require('express-validator');
 const rateLimit = require('express-rate-limit');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+// MongoDB connection
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/health_calculator';
+
+mongoose.connect(MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
+.then(() => console.log('✅ Connected to MongoDB'))
+.catch(err => console.error('❌ MongoDB connection error:', err));
 
 const logFilePath = path.join(__dirname, 'data/clickstream.json');
 const userClicksPath = path.join(__dirname, 'data/userClicks.json');
@@ -25,6 +36,7 @@ const featureRoutes = require('./routes/features');
 const formulaRoutes = require('./routes/formulas');
 const authRoutes = require('./routes/auth'); // Import auth routes
 const engineeredFeatureRoutes = require('./routes/engineeredFeatures'); // new route
+const healthRoutes = require('./routes/health'); // Import health routes
 
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
@@ -50,6 +62,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/features', featureRoutes);
 app.use('/api/formulas', formulaRoutes);
 app.use('/api/engineered_features', engineeredFeatureRoutes);
+app.use('/api/health', healthRoutes); // Add health routes
 
 // Catch-all handler to serve the React frontend for any other routes
 app.get('*', (req, res) => {

@@ -83,11 +83,11 @@ function App() {
 }
 
 function AuthButton() {
-    const { authTokens, logout } = useContext(AuthContext);
+    const { user, logout } = useContext(AuthContext);
 
-    console.log('AuthButton - authTokens:', authTokens);
+    console.log('AuthButton - user:', user);
 
-    return authTokens ? (
+    return user ? (
         <>
             <li className="nav-item">
                 <Link to="/health-calculator" className="nav-link" onClick={() => pushToDataLayer('health_calculator_click')}>

@@ -4,15 +4,21 @@ import { Navigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 
 const PrivateRoute = ({ children }) => {
-    const { authTokens, loading } = useContext(AuthContext);
+    const { user, loading } = useContext(AuthContext);
 
     if (loading) {
-        return <div>Loading...</div>; // Or a spinner/loading indicator
+        return (
+            <div className="container mt-5">
+                <div className="text-center">
+                    <p>Loading...</p>
+                </div>
+            </div>
+        );
     }
 
-    console.log('PrivateRoute - authTokens:', authTokens);
+    console.log('PrivateRoute - user:', user);
 
-    return authTokens ? children : <Navigate to="/login" replace />;
+    return user ? children : <Navigate to="/login" replace />;
 };
 
 export default PrivateRoute;

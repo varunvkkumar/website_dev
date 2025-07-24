@@ -4,15 +4,31 @@ import { AuthContext } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 function Logout() {
-  const { setAuthTokens } = useContext(AuthContext);
+  const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    setAuthTokens(null);
-    navigate('/');
-  }, [setAuthTokens, navigate]);
+    const performLogout = async () => {
+      try {
+        await logout();
+        navigate('/');
+      } catch (error) {
+        console.error('Logout error:', error);
+        // Navigate anyway in case of error
+        navigate('/');
+      }
+    };
 
-  return null;
+    performLogout();
+  }, [logout, navigate]);
+
+  return (
+    <div className="container mt-5">
+      <div className="text-center">
+        <p>Logging out...</p>
+      </div>
+    </div>
+  );
 }
 
 export default Logout;

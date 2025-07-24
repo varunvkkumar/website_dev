@@ -1,84 +1,148 @@
 // src/contexts/AuthContext.js
 import React, { createContext, useState, useEffect } from 'react';
-import axios from '../services/api'; // Use your configured Axios instance
+// import { signUpWithEmail, signInWithEmail, signInWithGoogle, logout as firebaseLogout, onAuthStateChange } from '../services/firebase';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [authTokens, setAuthTokens] = useState(() => {
-        return localStorage.getItem('tokens') || null;
-    });
     const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false); // Set to false for mock auth
 
-    const setTokens = (token) => {
-        localStorage.setItem('tokens', token);
-        setAuthTokens(token);
-    };
-
+    // Mock register function (bypasses Firebase)
     const register = async (email, password) => {
         try {
-            console.log('Registering user:', email);
-            const response = await axios.post('/api/auth/register', { email, password });
-            console.log('Registration response:', response.data);
-            setTokens(response.data.token);
-            return { success: true };
+            console.log('Mock registration for:', email);
+            
+            // Simulate API call delay
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            // Mock successful registration
+            const mockUser = {
+                uid: `mock-${Date.now()}`,
+                email: email,
+                displayName: email.split('@')[0],
+                accessToken: 'mock-token-' + Date.now()
+            };
+            
+            setUser(mockUser);
+            
+            // Store token in localStorage for API calls
+            localStorage.setItem('authToken', mockUser.accessToken);
+            localStorage.setItem('mockUser', JSON.stringify(mockUser));
+            
+            console.log('Mock registration successful:', mockUser);
+            return { success: true, user: mockUser };
         } catch (error) {
-            console.error('Registration Error:', error.response?.data?.error || error.message);
-            return { success: false, error: error.response?.data?.error || 'Registration failed' };
+            console.error('Mock Registration Error:', error.message);
+            return { success: false, error: error.message };
         }
     };
 
+    // Mock login function (bypasses Firebase)
     const login = async (email, password) => {
         try {
-            const response = await axios.post('/api/auth/login', { email, password });
-            setTokens(response.data.token);
-            return { success: true };
+            console.log('Mock login for:', email);
+            
+            // Simulate API call delay
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            // Mock successful login
+            const mockUser = {
+                uid: `mock-${Date.now()}`,
+                email: email,
+                displayName: email.split('@')[0],
+                accessToken: 'mock-token-' + Date.now()
+            };
+            
+            setUser(mockUser);
+            
+            // Store token in localStorage for API calls
+            localStorage.setItem('authToken', mockUser.accessToken);
+            localStorage.setItem('mockUser', JSON.stringify(mockUser));
+            
+            console.log('Mock login successful:', mockUser);
+            return { success: true, user: mockUser };
         } catch (error) {
-            console.error('Login Error:', error.response?.data?.error || error.message);
-            return { success: false, error: error.response?.data?.error || 'Login failed' };
+            console.error('Mock Login Error:', error.message);
+            return { success: false, error: error.message };
         }
     };
 
-    const logout = () => {
-        console.log("Logging out...");
-        localStorage.removeItem('tokens');
-        setAuthTokens(null);
-        setUser(null);
+    // Mock Google Sign-In function
+    const loginWithGoogle = async () => {
+        try {
+            console.log('Mock Google login');
+            
+            // Simulate API call delay
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            // Mock successful Google login
+            const mockUser = {
+                uid: `mock-google-${Date.now()}`,
+                email: 'user@gmail.com',
+                displayName: 'Google User',
+                accessToken: 'mock-google-token-' + Date.now()
+            };
+            
+            setUser(mockUser);
+            
+            // Store token in localStorage for API calls
+            localStorage.setItem('authToken', mockUser.accessToken);
+            localStorage.setItem('mockUser', JSON.stringify(mockUser));
+            
+            console.log('Mock Google login successful:', mockUser);
+            return { success: true, user: mockUser };
+        } catch (error) {
+            console.error('Mock Google Login Error:', error.message);
+            return { success: false, error: error.message };
+        }
     };
 
-    // Validate token on component mount
-    useEffect(() => {
-        const validateToken = async () => {
-            const token = authTokens;
-            if (token) {
-                try {
-                    const response = await axios.post('/api/auth/validate-token', { token });
-                    if (response.data.valid) {
-                        setUser(response.data.decoded); // Assuming the decoded token has user info
-                    } else {
-                        logout();
-                    }
-                } catch (error) {
-                    console.error('Token validation error:', error);
-                    logout();
-                }
-            }
-            setLoading(false);
-        };
+    // Mock logout function
+    const logout = async () => {
+        try {
+            setUser(null);
+            
+            // Clear tokens from localStorage
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('mockUser');
+            
+            console.log("Mock logout successful");
+        } catch (error) {
+            console.error('Mock logout error:', error);
+        }
+    };
 
-        validateToken();
-    }, [authTokens]);
+    // Mock authentication state - no Firebase listener needed
+    useEffect(() => {
+        // Check if user was previously logged in
+        const savedUser = localStorage.getItem('mockUser');
+        const savedToken = localStorage.getItem('authToken');
+        
+        if (savedUser && savedToken) {
+            const user = JSON.parse(savedUser);
+            // Verify token is still valid (in a real app, you'd check expiration)
+            if (user.accessToken === savedToken) {
+                setUser(user);
+            } else {
+                // Token mismatch, clear storage
+                localStorage.removeItem('mockUser');
+                localStorage.removeItem('authToken');
+            }
+        }
+        setLoading(false);
+    }, []);
 
     return (
         <AuthContext.Provider
             value={{
-                authTokens,
-                setAuthTokens: setTokens,
+                authTokens: user ? { access: user.accessToken } : null, // For backward compatibility
+                setAuthTokens: () => {}, // Deprecated but kept for compatibility
                 user,
                 setUser,
                 register,
                 login,
+                loginWithGoogle,
                 logout,
                 loading,
             }}
