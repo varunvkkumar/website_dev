@@ -37,6 +37,7 @@ const formulaRoutes = require('./routes/formulas');
 const authRoutes = require('./routes/auth'); // Import auth routes
 const engineeredFeatureRoutes = require('./routes/engineeredFeatures'); // new route
 const healthRoutes = require('./routes/health'); // Import health routes
+const trainingProgramRoutes = require('./routes/trainingPrograms'); // Import training program routes
 
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
@@ -63,6 +64,7 @@ app.use('/api/features', featureRoutes);
 app.use('/api/formulas', formulaRoutes);
 app.use('/api/engineered_features', engineeredFeatureRoutes);
 app.use('/api/health', healthRoutes); // Add health routes
+app.use('/api/training-program', trainingProgramRoutes); // Add training program routes
 
 // Catch-all handler to serve the React frontend for any other routes
 app.get('*', (req, res) => {

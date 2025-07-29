@@ -16,6 +16,8 @@ import PrivateRoute from './components/PrivateRoute';
 import SignUp from './components/SignUp';
 import AITransformationHub from './components/AITransformationHub/AITransformationHub'; // Import DataTransformationHub
 import AddAI from './components/AddAI/AddAI'; // Import AddAI component
+import TrainingProgramForm from './components/TrainingProgramForm/TrainingProgramForm'; // Import TrainingProgramForm component
+import TrainingProgramDisplay from './components/TrainingProgramDisplay/TrainingProgramDisplay'; // Import TrainingProgramDisplay component
 import './App.css';
 import { pushToDataLayer } from './utils/analytics';
 
@@ -75,6 +77,8 @@ function App() {
                         <Route path="/update-formula" element={<UpdateFormula />} />
                         <Route path="/AI-transformation-hub" element={<AITransformationHub />} /> {/* No PrivateRoute wrapper */}
                         <Route path="/add-ai" element={<AddAI />} /> {/* Add route for AddAI */}
+                                                    <Route path="/training-program" element={<TrainingProgramForm />} /> {/* Add route for TrainingProgramForm */}
+                            <Route path="/training-program/:id" element={<TrainingProgramDisplay />} /> {/* Add route for TrainingProgramDisplay */}
                     </Routes>
                 </div>
             </Router>
@@ -115,6 +119,11 @@ function AuthButton() {
             <li className="nav-item">
                 <Link to="/AI-transformation-hub" className="nav-link" onClick={() => pushToDataLayer('AI-transformation-hub')}>
                 AI-Transformation-Hub
+                </Link>
+            </li>
+            <li className="nav-item">
+                <Link to="/training-program" className="nav-link" onClick={() => pushToDataLayer('training-program_click')}>
+                Training Program
                 </Link>
             </li>
         </>
